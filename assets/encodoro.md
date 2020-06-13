@@ -1,4 +1,4 @@
-# Encodoro -> Aplikacja Mobilna 
+# Encodoro <-> Aplikacja Mobilna 
 
 Głównym załozeniem będzie połączenia aplikacji na telefonie z Encodoro (projekt na SM)
 
