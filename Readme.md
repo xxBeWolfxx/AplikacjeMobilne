@@ -2,4 +2,4 @@
 
 ## Pomysły
 
-- [Encodoro -> Aplikcjana Telefon](assets/encodoro.md)
+- [Encodoro <-> Aplikcjana Telefon](assets/encodoro.md)
