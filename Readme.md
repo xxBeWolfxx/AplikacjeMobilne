@@ -8,9 +8,9 @@ Projekt ma na celu stworzenie aplikacji kompatybilnej z projektem Ł.Kozaka (Enc
 ## Założenia aplikacji: 
 1. Ekran logowania: konto lokalne albo fejs albo Google (OAuth).
 1. Funkcje aplikacji:
-- pomodoro (konfiguracja czasomierza);
-- mój dzień: pogoda, zadania jakie na dzisiaj (jakieś deadline'y i te sprawy);
-- zadania (dodawania nowych zadań i oglądanie starych).
+    - pomodoro (konfiguracja czasomierza);
+    - mój dzień: pogoda, zadania jakie na dzisiaj (jakieś deadline'y i te sprawy);
+    - zadania (dodawania nowych zadań i oglądanie starych).
 1. Powiadomienia jak SMSki działają w tle.
 1. Lokalna baza danych.
 
