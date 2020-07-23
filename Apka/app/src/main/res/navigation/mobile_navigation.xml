@@ -12,14 +12,18 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.asystentoro.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_myday"
+        android:name="com.example.asystentoro.nav_mydayFragment"
+        android:label="My Day"
+        tools:layout="@layout/fragment_nav_myday" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.asystentoro.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_task"
+        android:name="com.example.asystentoro.TaskFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_task" />
+    <fragment
+        android:id="@+id/nav_pomodoro"
+        android:name="com.example.asystentoro.PomodoroFragment"
+        android:label="Pomodoro"
+        tools:layout="@layout/fragment_pomodoro" />
 </navigation>
