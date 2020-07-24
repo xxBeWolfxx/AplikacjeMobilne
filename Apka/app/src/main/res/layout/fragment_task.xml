@@ -51,6 +51,16 @@
                 android:src="@android:drawable/ic_input_add"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="103dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="144dp"
+                android:layout_marginTop="112dp"
+                android:text="ANDRZEJ"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
