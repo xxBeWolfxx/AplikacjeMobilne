@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/taskbackground"
+    android:background="@drawable/task"
     android:backgroundTintMode="screen"
     tools:context=".TaskFragment">
 
@@ -13,8 +13,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#42000000"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="#42000000">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
