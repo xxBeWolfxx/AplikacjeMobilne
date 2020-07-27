@@ -15,20 +15,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.jaeger.library.StatusBarUtil
-
-import android.view.View
-import android.widget.Button
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.gson.responseObject
-import kotlinx.android.synthetic.main.activity_main.*
-import com.google.gson.annotations.SerializedName
-import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,10 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
