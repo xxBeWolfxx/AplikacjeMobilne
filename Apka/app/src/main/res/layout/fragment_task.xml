@@ -19,8 +19,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="384dp"
-            android:layout_height="387dp"
+            android:layout_width="387dp"
+            android:layout_height="475dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,10 +36,10 @@
             android:layout_height="239dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.458"
+            app:layout_constraintHorizontal_bias="0.583"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.704">
+            app:layout_constraintVertical_bias="0.028">
 
             <ImageButton
                 android:id="@+id/imageButton2"
