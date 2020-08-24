@@ -28,8 +28,6 @@ class DoTAsk(var title:String, var id:Int) {
         var temp:Int = 0
         var time:Int = 0
 
-
-
     }
 
 

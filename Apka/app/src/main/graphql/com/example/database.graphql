@@ -1,0 +1,9 @@
+query TaskDetails {
+    tasks {
+        id
+        name
+        type
+        date
+        text
+    }
+}
