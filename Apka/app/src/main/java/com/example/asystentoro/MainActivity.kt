@@ -1,12 +1,8 @@
 package com.example.asystentoro
 
-import android.app.Activity
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -42,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             val respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             Log.d("Launch String", "Success ${respone?.data}")
             }
+
 
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
