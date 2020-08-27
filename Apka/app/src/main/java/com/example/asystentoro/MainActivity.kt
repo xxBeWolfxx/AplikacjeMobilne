@@ -99,12 +99,15 @@ class MainActivity : AppCompatActivity() {
             job.id = item.id
             job.text = item.text
             job.date = item.date.toString()
+            job.number = variable
+            job = DoTAsk().dataConverter(job)
             arrayTask?.add(variable, job)
            //arrayTask!![variable]?.title = item.name
             variable += 1
-//            Log.d("Kupa", item.name)
+           // Log.d("Kupa", item.name[3].toString())
             if (variable == database.data?.tasks?.size)
         {
+            DoTAsk().dataConverter(job)
             variable = 0
         }
 //
@@ -112,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //
-        arrayTask?.forEach { it.title?.let { it -> Log.d("Pa na to Kotku:", it) } }
+        arrayTask?.forEach { it.title.let { it -> Log.d("Pa na to Kotku:", it) } }
         return arrayTask!!
     }
 
