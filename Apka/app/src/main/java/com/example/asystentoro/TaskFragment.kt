@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.apollographql.apollo.api.Response
 import com.example.TaskDetailsQuery
 
@@ -15,6 +17,12 @@ import com.example.TaskDetailsQuery
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private val mNicolasCageMovies = listOf(
+    "1",
+    "2",
+    "3"
+)
 
 /**
  * A simple [Fragment] subclass.
@@ -25,7 +33,11 @@ class TaskFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var database: String
+    var myDataFromActivity:ArrayList<DoTAsk> = ArrayList()
+    var RecyclerTasks: RecyclerView? = null
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +49,18 @@ class TaskFragment : Fragment() {
         }
 
 
-        activity?.run {
 
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        viewManager = LinearLayoutManager(this)
+//        viewAdapter = MyAdapter(myDataset)
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_task, container, false)
     }
@@ -53,8 +68,14 @@ class TaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity: MainActivity? = activity as MainActivity?
-        val myDataFromActivity = activity?.getMyData()
-        Log.d("Launch String", "Success ${myDataFromActivity?.data}")
+        myDataFromActivity = activity?.getTasks()!!
+        RecyclerTasks = view.findViewById(R.id.RycyclerTask)
+        RecyclerTasks?.apply {
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+
+
 
     }
 
