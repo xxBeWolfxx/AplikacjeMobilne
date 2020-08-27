@@ -38,17 +38,7 @@ class MainActivity : AppCompatActivity() {
             .serverUrl("https://api-eu-central-1.graphcms.com/v2/ckd4epu1q0meu01xr4wx3arzu/master?query=%7B%0A%20%20tasks%20%7B%0A%20%20%20%20name%0A%20%20%20%20type%0A%20%20%20%20date%0A%20%20%20%20text%0A%20%20%20%20%0A%20%20%7D%0A%7D%0A")
             .build()
 
-<<<<<<< HEAD
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro), drawerLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-=======
+
         lifecycleScope.launchWhenResumed {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
@@ -71,10 +61,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
->>>>>>> origin/master
 
 
-    }
+
+    
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -87,9 +77,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-<<<<<<< HEAD
-}
-=======
+
     fun getTasks(): ArrayList<DoTAsk>
     {
 
@@ -135,4 +123,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
->>>>>>> origin/master
+
