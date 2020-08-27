@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var respone: Response<TaskDetailsQuery.Data>
-    lateinit var TaskManger: ArrayList<DoTAsk>
+    lateinit var TaskManger: ArrayList<DoTAsk>//nn
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
