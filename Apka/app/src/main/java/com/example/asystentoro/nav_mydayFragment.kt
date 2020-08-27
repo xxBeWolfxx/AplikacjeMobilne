@@ -1,8 +1,16 @@
 package com.example.asystentoro
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
-import android.view.KeyEvent
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +18,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.*
 import org.json.JSONException
@@ -80,12 +92,14 @@ class nav_mydayFragment : Fragment() {
             imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
             api_key(search!!.text.toString())
         }
+
     }
 
     private fun api_key(City: String) {
         val client = OkHttpClient()
         val request = Request.Builder()
             .url("https://api.openweathermap.org/data/2.5/weather?q=$City&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+                //.url("https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
             .get()
             .build()
         val policy =
@@ -141,6 +155,7 @@ class nav_mydayFragment : Fragment() {
         this.activity?.runOnUiThread(Runnable { text.text = value })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setImage(
         imageView: ImageView,
         value: String
@@ -186,5 +201,9 @@ class nav_mydayFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+        private val TAG = "LocationProvider"
+        private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     }
 }
+
+

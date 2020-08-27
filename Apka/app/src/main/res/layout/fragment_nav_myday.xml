@@ -32,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginTop="40dp"
-            android:background="#45FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,8 +39,8 @@
         <View
 
             android:id="@+id/view2"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_width="408dp"
+            android:layout_height="120dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,8 +111,8 @@
 
                 <ImageView
                     android:id="@+id/wheather_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/wheather" />
 
