@@ -21,6 +21,11 @@ class DoTAsk() {
 //        this.type=type
 //    }
 
+    fun dataConverter(tasks: DoTAsk)
+    {
+        
+    }
+
 
     fun generateTaskList(tasks: ArrayList<DoTAsk>): List<ItemCardView> {
         val list = ArrayList<ItemCardView>()
