@@ -15,4 +15,6 @@
     <string name="task">Task</string>
     <string name="myday">My Day</string>
     <string name="Pomodoro">Pomodoro</string>
+    <string name="latitudeBabel">Latitude</string>
+    <string name="longitudeBabel">Longitude</string>
 </resources>
