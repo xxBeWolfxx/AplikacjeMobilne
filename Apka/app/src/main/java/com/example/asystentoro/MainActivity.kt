@@ -14,11 +14,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.toDeferred
-import com.apollographql.apollo.exception.ApolloException
 import com.example.TaskDetailsQuery
 import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -50,11 +46,9 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
     }
-
-
-
-
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
