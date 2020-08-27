@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
         }
-            val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
 
             val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
             val navView: NavigationView = findViewById(R.id.nav_view)
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
