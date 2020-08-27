@@ -1,10 +1,13 @@
+
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion '30.0.1'
 
     defaultConfig {
         applicationId "com.example.asystentoro"
@@ -48,6 +51,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
 
     implementation 'com.google.android.material:material:1.1.0'
+
+    
 //lifecycle and viewmodel
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

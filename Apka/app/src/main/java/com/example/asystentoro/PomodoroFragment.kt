@@ -5,21 +5,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_pomodoro.*
+import androidx.appcompat.app.AppCompatActivity;
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PomodoroFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PomodoroFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    public var SetCycleDuration = 3600
+    public var SetCyclesSet = 5
+    public var SetBreakDuration = 300
+    public var SetBreakLongDuration = 900
+    public var SetLongBreakCycles = 4
+
+    private var CurCycleDuration = 0
+    private var CurCycleSet = 0
+    private var CurBreakDuration = 0
+    private var CurBreakLongDuration = 0
+    private var CurLongBreakCycles = 0
+
+    private var PomodoroCycle = "Stopped" //Work, Break, LongBreak
+    private var PomodoroStatus = "Stopped" //Start, Paused
+
+
     private var param1: String? = null
     private var param2: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +41,25 @@ class PomodoroFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+        updatePomodoro()
+
+
+
+//        PomodoroStartButton.setOnClickListener {v ->
+//
+//            if (PomodoroStatus == "Stopped")
+//            {
+//                PomodoroStartButtonWrapper.visibility = View.INVISIBLE
+//            }
+//        }
+
+
+    }
+
+    fun updatePomodoro(){
+        PomodoroStatusText.text = PomodoroCycle
     }
 
     override fun onCreateView(
@@ -36,6 +69,7 @@ class PomodoroFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pomodoro, container, false)
     }
+
 
     companion object {
         /**
