@@ -14,6 +14,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
         android:layout_margin="16dp"
         android:background="@android:color/background_light"
         android:minWidth="1080dp"
@@ -159,6 +160,13 @@
 
         </LinearLayout>
 
+=======
+        android:background="#33000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> origin/AnK
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
