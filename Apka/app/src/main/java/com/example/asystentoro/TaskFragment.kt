@@ -1,28 +1,23 @@
 package com.example.asystentoro
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.apollographql.apollo.api.Response
-import com.example.TaskDetailsQuery
+import kotlinx.android.synthetic.main.fragment_task.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
-private val mNicolasCageMovies = listOf(
-    "1",
-    "2",
-    "3"
-)
 
 /**
  * A simple [Fragment] subclass.
@@ -33,10 +28,9 @@ class TaskFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var myDataFromActivity:ArrayList<DoTAsk> = ArrayList()
+    var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
     var RecyclerTasks: RecyclerView? = null
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+
 
 
 
@@ -51,14 +45,13 @@ class TaskFragment : Fragment() {
 
 
 
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        viewManager = LinearLayoutManager(this)
-//        viewAdapter = MyAdapter(myDataset)
 
 
         // Inflate the layout for this fragment
@@ -67,12 +60,24 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activity: MainActivity? = activity as MainActivity?
-        myDataFromActivity = activity?.getTasks()!!
+
+        val ace: MainActivity? = activity as MainActivity?
+        myTaskFromMainActivity = ace?.getTasks()!!
+
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
-        RecyclerTasks?.apply {
-            layoutManager = LinearLayoutManager(activity)
-        }
+        val exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
+        RecyclerTasks?.adapter = MyAdapter(exampleList)
+        RecyclerTasks?.layoutManager = LinearLayoutManager(context)
+        RecyclerTasks?.setHasFixedSize(true)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,4 +103,8 @@ class TaskFragment : Fragment() {
                 }
             }
     }
+
+
+
+
 }

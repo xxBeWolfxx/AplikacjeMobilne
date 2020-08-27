@@ -15,7 +15,7 @@
             android:title="@string/myday" />
         <item
             android:id="@+id/nav_pomodoro"
-            android:title="Pomodoro"    />
+            android:title="@string/pomodoro"    />
     </group>
 
     <item android:title="Communicate">

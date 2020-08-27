@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var respone: Response<TaskDetailsQuery.Data>
-    lateinit var TaskManger: ArrayList<DoTAsk>
+    lateinit var TaskManger: ArrayList<DoTAsk>//nn
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +38,11 @@ class MainActivity : AppCompatActivity() {
             .serverUrl("https://api-eu-central-1.graphcms.com/v2/ckd4epu1q0meu01xr4wx3arzu/master?query=%7B%0A%20%20tasks%20%7B%0A%20%20%20%20name%0A%20%20%20%20type%0A%20%20%20%20date%0A%20%20%20%20text%0A%20%20%20%20%0A%20%20%7D%0A%7D%0A")
             .build()
 
+
         lifecycleScope.launchWhenResumed {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
         }
-            val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
 
             val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
             val navView: NavigationView = findViewById(R.id.nav_view)
@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
     fun getTasks(): ArrayList<DoTAsk>
     {
 
@@ -119,3 +122,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
