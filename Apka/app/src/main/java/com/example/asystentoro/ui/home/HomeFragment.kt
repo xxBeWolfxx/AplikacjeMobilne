@@ -13,23 +13,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.asystentoro.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-
-
-    var view_weather: ImageView? = null
-    var view_city: TextView? = null
-    var view_temp: TextView? = null
-    var view_press: TextView? = null
-    var view_hum: TextView? = null
-    var btnDay: Button? = null
-    var btnTasks: Button? = null
-    var btnPomodoro: Button? = null
-
 
 
     override fun onCreateView(
@@ -46,15 +40,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        view_weather = view.findViewById(R.id.wheather_image)
-        view_city = view.findViewById(R.id.town)
-        view_temp = view.findViewById(R.id.temp)
-        view_press = view.findViewById(R.id.press)
-        view_hum = view.findViewById(R.id.hum)
-        btnDay=view.findViewById(R.id.btnDay)
-        btnTasks=view.findViewById(R.id.btnTasks)
-        btnPomodoro=view.findViewById(R.id.btnPomodoro)
 
+        val btnDay: Button = view.findViewById(R.id.btnDay)
+        btnDay.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_myday))
+
+        val btnTasks: Button = view.findViewById(R.id.btnTasks)
+        btnTasks.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_task))
+
+        val btnPomodoro: Button = view.findViewById(R.id.btnPomodoro)
+        btnPomodoro.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_pomodoro))
 
 
     }
