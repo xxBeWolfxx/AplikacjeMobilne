@@ -3,12 +3,10 @@ package com.example.asystentoro
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -19,8 +17,6 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.toDeferred
 import com.example.TaskDetailsQuery
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_nav_myday.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,10 +45,7 @@ class MainActivity : AppCompatActivity() {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
         }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -66,35 +59,14 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-=======
-            val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
->>>>>>> origin/AnK
 
-            val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-            val navView: NavigationView = findViewById(R.id.nav_view)
-            val navController = findNavController(R.id.nav_host_fragment)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro
-                ), drawerLayout
-            )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
->>>>>>> master
 
     }
 
 
-<<<<<<< HEAD
-=======
 
 
 
-
-
->>>>>>> master
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -108,13 +80,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-<<<<<<< HEAD
-    fun getTasks(): ArrayList<DoTAsk> {
-=======
     fun getTasks(): ArrayList<DoTAsk>
     {
->>>>>>> master
-
         return TaskManger
     }
 
@@ -137,20 +104,12 @@ class MainActivity : AppCompatActivity() {
             arrayTask?.add(variable, job)
             //arrayTask!![variable]?.title = item.name
             variable += 1
-<<<<<<< HEAD
            // Log.d("Kupa", item.name[3].toString())
             if (variable == database.data?.tasks?.size)
         {
             DoTAsk().dataConverter(job)
             variable = 0
-        }
-=======
-//            Log.d("Kupa", item.name)
-            if (variable == database.data?.tasks?.size) {
-                variable = 0
-            }
->>>>>>> origin/AnK
-//
+        } //
         }
 
 
@@ -160,13 +119,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-<<<<<<< HEAD
-}
-=======
 
 
 
 
 }
 
->>>>>>> master
