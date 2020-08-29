@@ -3,7 +3,10 @@ package com.example.asystentoro
 import android.app.Application
 import android.widget.ImageView
 import android.widget.TextView
+<<<<<<< HEAD
 import com.apollographql.apollo.ApolloClient
+=======
+>>>>>>> origin/master
 
 public class MyApplication(): Application()
 {
@@ -17,8 +20,11 @@ public class MyApplication(): Application()
         var temp: Double? = null
         var press: Double? = null
         var hum: Double? = null
+<<<<<<< HEAD
         var globalTask:ArrayList<DoTAsk>? = null
         var globalApolloClient: ApolloClient? = null
+=======
+>>>>>>> origin/master
     }
 
 }

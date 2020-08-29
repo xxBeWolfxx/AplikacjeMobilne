@@ -178,15 +178,15 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="#CC000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
+
 
                 <ImageView
                     android:id="@+id/wheather_image"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/wheather"
                     android:visibility="visible" />
 
 

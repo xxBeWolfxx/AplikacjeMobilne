@@ -25,7 +25,6 @@ import android.content.Context
 import android.location.Geocoder
 import android.location.LocationManager
 import android.widget.*
-import kotlinx.android.synthetic.main.fragment_nav_myday.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -62,6 +61,7 @@ class nav_mydayFragment : Fragment() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1010
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -89,11 +89,27 @@ class nav_mydayFragment : Fragment() {
         view_press = view.findViewById(R.id.press)
         view_hum = view.findViewById(R.id.hum)
 
+        if(MyApplication.gcity==null){
+
+        }
+        else {
+            api_key("https://api.openweathermap.org/data/2.5/weather?q=${MyApplication.gcity}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+        }
+
+        if(MyApplication.glat==null && MyApplication.glon==null){
+
+        }else {
+            api_key("https://api.openweathermap.org/data/2.5/weather?lat=${MyApplication.glat}&lon=${MyApplication.glon}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+        }
+
         search_floating?.setOnClickListener {
             val imm = getSystemService(requireView().context, InputMethodManager::class.java)
             imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
             City=(search!!.text.toString())
+            MyApplication.gcity=City
             api_key("https://api.openweathermap.org/data/2.5/weather?q=$City&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+            MyApplication.glat=null
+            MyApplication.glon=null
         }
 
         button=view.findViewById(R.id.button)
@@ -108,13 +124,14 @@ class nav_mydayFragment : Fragment() {
 
             RequestPermission()
             getLastLocation()
+            MyApplication.gcity=null
 
         }
 
 
     }
 
-    private fun api_key(Key: String) {
+     fun api_key(Key: String) {
         val client = OkHttpClient()
 
 
@@ -154,8 +171,15 @@ class nav_mydayFragment : Fragment() {
                         view_city?.let {
                             if (CapCity != null) {
                                 setText(it, CapCity)
+
                             }
                         }
+                        MyApplication.city=CapCity
+                        MyApplication.weather=icons
+                        MyApplication.hum=humidity
+                        MyApplication.press=pressure
+                        MyApplication.temp=Temperature
+
                         val temps =
                             Math.round(Temperature).toString() + "°C"
                         view_temp?.let { setText(it, temps) }
@@ -176,7 +200,7 @@ class nav_mydayFragment : Fragment() {
         }
     }
 
-    private fun setText(text: TextView, value: String) {
+    fun setText(text: TextView, value: String) {
         this.activity?.runOnUiThread(Runnable { text.text = value })
     }
 
@@ -222,6 +246,8 @@ class nav_mydayFragment : Fragment() {
                         lat=location.latitude
                         lon=location.longitude
                         api_key("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+                        MyApplication.glat=lat
+                        MyApplication.glon=lon
                         CurrentLoc?.text  = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
                     }
                 }

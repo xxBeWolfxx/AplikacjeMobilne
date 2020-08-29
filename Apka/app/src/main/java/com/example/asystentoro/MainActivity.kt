@@ -3,12 +3,10 @@ package com.example.asystentoro
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -22,8 +20,6 @@ import com.apollographql.apollo.coroutines.toDeferred
 import com.example.SaveTasksMutation
 import com.example.TaskDetailsQuery
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_nav_myday.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -78,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present. mmm
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -89,6 +85,13 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+<<<<<<< HEAD
+=======
+
+    fun getTasks(): ArrayList<DoTAsk> {
+        return TaskManger
+    }
+>>>>>>> origin/master
 
     private fun convertDatabse(database: Response<TaskDetailsQuery.Data>): ArrayList<DoTAsk> {
         val arrayTask = database.data?.tasks?.size?.let { ArrayList<DoTAsk>(it) }
@@ -104,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             job = DoTAsk().dataConverter(job)
             arrayTask?.add(variable, job)
             variable += 1
+
             if (variable == database.data?.tasks?.size) {
                 DoTAsk().dataConverter(job)
                 variable = 0
@@ -111,10 +115,14 @@ class MainActivity : AppCompatActivity() {
         }
             arrayTask?.forEach { it.title.let { it -> Log.d("Checking:", it) } }
             return arrayTask!!
+
         }
 
 
 
+
+
+
+
+
 }
-
-
