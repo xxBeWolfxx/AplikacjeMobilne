@@ -43,7 +43,7 @@ class PomodoroFragment : Fragment() {
         }
 
 
-        updatePomodoro()
+        //updatePomodoro()
 
 
 

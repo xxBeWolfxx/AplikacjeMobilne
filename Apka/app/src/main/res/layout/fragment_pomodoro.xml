@@ -17,8 +17,7 @@
         android:layout_margin="16dp"
         android:background="@android:color/background_light"
         android:minWidth="1080dp"
-        android:minHeight="1920dp"
-        >
+        android:minHeight="1920dp">
 
 
         <TextView
@@ -45,8 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/PomodoroCounter"
@@ -58,8 +56,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -69,9 +66,9 @@
             android:layout_marginBottom="16dp"
             android:baselineAligned="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/PomodoroProgress"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PomodoroProgress"
 
             >
 
@@ -87,10 +84,10 @@
                     android:id="@+id/PomodoroStartButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/ic_play"
-                    android:layout_marginBottom="16dp"/>
+                    android:src="@drawable/ic_play" />
 
 
             </LinearLayout>
@@ -108,11 +105,11 @@
                     android:id="@+id/PomodoroPauseButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_pause"
-                    tools:ignore="NestedWeights"
-                    android:layout_marginBottom="16dp"/>
+                    tools:ignore="NestedWeights" />
 
             </LinearLayout>
 
@@ -122,18 +119,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:visibility="visible"
-                >
+                android:visibility="visible">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/PomodoroStopButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_stop"
-                    tools:ignore="NestedWeights"
-                    android:layout_marginBottom="16dp"/>
+                    tools:ignore="NestedWeights" />
 
             </LinearLayout>
 
@@ -149,11 +145,11 @@
                     android:id="@+id/PomodoroSettingsButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_settings"
-                    tools:ignore="NestedWeights"
-                    android:layout_marginBottom="16dp"/>
+                    tools:ignore="NestedWeights" />
 
             </LinearLayout>
 
