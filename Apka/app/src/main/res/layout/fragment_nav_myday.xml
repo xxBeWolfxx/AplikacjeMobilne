@@ -106,8 +106,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="#CC000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
 
                 <ImageView
                     android:id="@+id/wheather_image"

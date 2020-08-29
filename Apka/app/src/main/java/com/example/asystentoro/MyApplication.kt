@@ -1,13 +1,26 @@
 package com.example.asystentoro
 
 import android.app.Application
+import android.widget.ImageView
+import android.widget.TextView
+import com.apollographql.apollo.ApolloClient
 
-class MyApplication(): Application()
+
+public class MyApplication(): Application()
 {
-    private var GlobalTask = DoTAsk()
+    companion object {
+        var glat: Double? = null
+        var glon: Double? = null
+        var gcity: String? = null
 
-    fun getGlobalTask(): DoTAsk {
-        return GlobalTask
+        var weather: String? = null
+        var city: String? = null
+        var temp: Double? = null
+        var press: Double? = null
+        var hum: Double? = null
+
+        var globalTask:ArrayList<DoTAsk>? = null
+
     }
 
 }
