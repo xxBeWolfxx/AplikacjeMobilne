@@ -18,11 +18,17 @@
             android:title="@string/pomodoro"    />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Social media">
         <menu>
             <item
-                android:id="@+id/nav_email"
-                android:title="email" />
+                android:id="@+id/nav_facebook"
+                android:title="Facebook" />
+            <item
+                android:id="@+id/nav_instagram"
+                android:title="Instagram" />
+            <item
+                android:id="@+id/nav_twitter"
+                android:title="Twitter" />
         </menu>
     </item>
 </menu>
