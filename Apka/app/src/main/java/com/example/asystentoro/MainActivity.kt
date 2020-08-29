@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var respone: Response<TaskDetailsQuery.Data>
     lateinit var TaskManger: ArrayList<DoTAsk>
-    lateinit var apolloClient: ApolloClient
+    private lateinit var apolloClient: ApolloClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
             MyApplication.globalTask = TaskManger
-            MyApplication.globalApolloClient = apolloClient
 
         }
 
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present. mmm
         menuInflater.inflate(R.menu.main, menu)
@@ -85,13 +83,10 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-<<<<<<< HEAD
-=======
-
-    fun getTasks(): ArrayList<DoTAsk> {
-        return TaskManger
+    fun getApolloClient(): ApolloClient
+    {
+        return apolloClient
     }
->>>>>>> origin/master
 
     private fun convertDatabse(database: Response<TaskDetailsQuery.Data>): ArrayList<DoTAsk> {
         val arrayTask = database.data?.tasks?.size?.let { ArrayList<DoTAsk>(it) }
@@ -117,10 +112,6 @@ class MainActivity : AppCompatActivity() {
             return arrayTask!!
 
         }
-
-
-
-
 
 
 

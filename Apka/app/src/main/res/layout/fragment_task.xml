@@ -160,7 +160,6 @@
                         android:layout_marginTop="5dp"
                         android:entries="@array/type"
                         android:spinnerMode="dropdown"
-                        android:src="@drawable/arrow_down"
                         android:textColor="@android:color/black"
                         android:textSize="8sp" />
 

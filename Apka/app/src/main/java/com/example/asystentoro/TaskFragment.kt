@@ -4,29 +4,22 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-=======
 import android.widget.*
 import androidx.fragment.app.Fragment
->>>>>>> origin/master
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-<<<<<<< HEAD
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.toInput
 import com.apollographql.apollo.coroutines.toDeferred
 import com.example.SaveTasksMutation
 import kotlinx.android.synthetic.main.fragment_task.*
-=======
->>>>>>> origin/master
-import kotlin.random.Random
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import java.text.SimpleDateFormat
@@ -51,17 +44,12 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
     var RecyclerTasks: RecyclerView? = null
     lateinit var exampleList: ArrayList<ItemCardView>
-<<<<<<< HEAD
     lateinit var adapter: MyAdapter
-    lateinit var apolloclientTask: ApolloClient
+    var apolloclientTask: ApolloClient?=null
     var isclicked:Boolean = false
-
-
-=======
     var Spinner: Spinner? = null
     var formate = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
     var timeFormat = SimpleDateFormat("hh:mm a", Locale.UK)
->>>>>>> origin/master
 
 
 
@@ -88,15 +76,13 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-<<<<<<< HEAD
         myTaskFromMainActivity = MyApplication.globalTask!!
-        apolloclientTask = MyApplication.globalApolloClient!!
-
-
-=======
+//        apolloclientTask = MyApplication.globalApolloClient!!
         val ace: MainActivity? = activity as MainActivity?
-        myTaskFromMainActivity = ace?.getTasks()!!
->>>>>>> origin/master
+        apolloclientTask = ace?.getApolloClient()
+
+
+
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
         exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
         adapter = MyAdapter(exampleList, this)
@@ -122,12 +108,9 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             exampleList.removeAt(exampleList.size - 1)
             adapter.notifyDataSetChanged()
            // apolloclientTask.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput())).toDeferred()
-
-<<<<<<< HEAD
         }
-=======
+
       /////////////////////     SPINER - TYPE        //////////////////
->>>>>>> origin/master
 
         val type = resources.getStringArray(R.array.type)
         Spinner = view.findViewById(R.id.typeTask)
@@ -243,8 +226,6 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                 }
             }
     }
-
-
 
 
 }
