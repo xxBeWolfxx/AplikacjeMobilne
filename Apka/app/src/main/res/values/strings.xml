@@ -14,11 +14,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="task">Task</string>
     <string name="myday">My Day</string>
-    <string name="Pomodoro">Pomodoro</string>
-<<<<<<< HEAD
     <string name="pomodoro">Pomodoro</string>
     <string name="latitudeBabel">Latitude</string>
     <string name="longitudeBabel">Longitude</string>
-=======
->>>>>>> origin/AnK
 </resources>

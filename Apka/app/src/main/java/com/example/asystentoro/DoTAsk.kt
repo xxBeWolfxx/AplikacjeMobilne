@@ -39,7 +39,7 @@ class DoTAsk() {
     }
 
 
-    fun generateTaskList(tasks: ArrayList<DoTAsk>): List<ItemCardView> {
+    fun generateTaskList(tasks: ArrayList<DoTAsk>): ArrayList<ItemCardView> {
         val list = ArrayList<ItemCardView>()
         for (i in 0 until tasks.size) {
             val drawable = when (tasks[i].title.toLowerCase()) {
@@ -50,6 +50,7 @@ class DoTAsk() {
             }
             val item = ItemCardView(drawable, tasks[i].title, "Data: ${tasks[i].day}-${tasks[i].month}-${tasks[i].year}   Time: ${tasks[i].hour}:${tasks[i].minute} ")
             list += item
+
         }
         return list
     }
