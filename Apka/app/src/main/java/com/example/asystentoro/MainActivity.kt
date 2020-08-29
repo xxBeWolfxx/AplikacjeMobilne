@@ -15,8 +15,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.api.toInput
 import com.apollographql.apollo.coroutines.toDeferred
+import com.example.SaveTasksMutation
 import com.example.TaskDetailsQuery
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var respone: Response<TaskDetailsQuery.Data>
     lateinit var TaskManger: ArrayList<DoTAsk>
+    lateinit var apolloClient: ApolloClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,16 +43,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
-        val apolloClient = ApolloClient.builder()
+        apolloClient = ApolloClient.builder()
             .serverUrl("https://api-eu-central-1.graphcms.com/v2/ckd4epu1q0meu01xr4wx3arzu/master?query=%7B%0A%20%20tasks%20%7B%0A%20%20%20%20name%0A%20%20%20%20type%0A%20%20%20%20date%0A%20%20%20%20text%0A%20%20%20%20%0A%20%20%7D%0A%7D%0A")
             .build()
 
 
-        lifecycleScope.launchWhenResumed {
+        lifecycleScope.launchWhenStarted {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
+            MyApplication.globalTask = TaskManger
+            MyApplication.globalApolloClient = apolloClient
+
         }
-        val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -82,11 +89,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun getTasks(): ArrayList<DoTAsk> {
-
-
-        return TaskManger
-    }
 
     private fun convertDatabse(database: Response<TaskDetailsQuery.Data>): ArrayList<DoTAsk> {
         val arrayTask = database.data?.tasks?.size?.let { ArrayList<DoTAsk>(it) }

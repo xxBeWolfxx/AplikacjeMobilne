@@ -10,10 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.toInput
+import com.apollographql.apollo.coroutines.toDeferred
+import com.example.SaveTasksMutation
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlin.random.Random
 
@@ -27,13 +32,16 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TaskFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class TaskFragment : Fragment() {
+class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
     var RecyclerTasks: RecyclerView? = null
     lateinit var exampleList: ArrayList<ItemCardView>
+    lateinit var adapter: MyAdapter
+    lateinit var apolloclientTask: ApolloClient
+    var isclicked:Boolean = false
 
 
 
@@ -64,24 +72,36 @@ class TaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ace: MainActivity? = activity as MainActivity?
-        myTaskFromMainActivity = ace?.getTasks()!!
+        myTaskFromMainActivity = MyApplication.globalTask!!
+        apolloclientTask = MyApplication.globalApolloClient!!
 
 
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
         exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
-        val adapter = MyAdapter(exampleList)
+        adapter = MyAdapter(exampleList, this)
 
 //       RecyclerTasks?.adapter = MyAdapter(exampleList)
         RecyclerTasks?.adapter = adapter
         RecyclerTasks?.layoutManager = LinearLayoutManager(view.context)
         RecyclerTasks?.setHasFixedSize(true)
 
-        var btn:ImageButton = view.findViewById(R.id.Adder)
-        btn.setOnClickListener{
-            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO")
-            exampleList.add(exampleList.size,newItem)
-            adapter.notifyItemChanged(exampleList.size)
+        val btnAdd:ImageButton = view.findViewById(R.id.Adder)
+        btnAdd.setOnClickListener{
+            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO", exampleList.size)
+            exampleList.add(newItem.ID,newItem)
+            adapter.notifyDataSetChanged()
+
+            if (isclicked)
+            {
+
+            }
+        }
+        val btnRem:ImageButton = view.findViewById(R.id.Remover)
+        btnRem.setOnClickListener{
+            exampleList.removeAt(exampleList.size - 1)
+            adapter.notifyDataSetChanged()
+           // apolloclientTask.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput())).toDeferred()
+
         }
 
 
@@ -96,24 +116,19 @@ class TaskFragment : Fragment() {
 
 
 
-    }
-
-    fun insertItem(view: View)
-    {
-        val index: Int = Random.nextInt(8)
-        val newItem = ItemCardView(
-            R.drawable.ic_arrow_upward_24,
-            "Kupa",
-            "Frajer"
-        )
-
 
     }
 
-    fun removeItem(view: View)
-    {
+
+    override fun onItemClick(position: Int) {
+        Log.d("Klik", "Position $position")
+        isclicked = true
+        val clickedItem= exampleList[position]
+        clickedItem.text1 = "POKAŻ CYCKI"
+        adapter.notifyDataSetChanged()
 
     }
+
 
     companion object {
         /**
