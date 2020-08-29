@@ -1,34 +1,30 @@
 package com.example.asystentoro
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.os.StrictMode
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import java.util.*
+import android.content.Context
+import android.location.Geocoder
+import android.location.LocationManager
+import android.widget.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,7 +52,14 @@ class nav_mydayFragment : Fragment() {
       var view_temp: TextView? = null
       var view_press: TextView? = null
       var view_hum: TextView? = null
+    var button: FloatingActionButton?=null
+    var CurrentLoc:TextView?=null
+    var lat :Double?=null
+    var lon:Double?=null
+    var City:String?=null
 
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val PERMISSION_ID = 1010
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +68,6 @@ class nav_mydayFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
 
     }
     override fun onCreateView(
@@ -87,19 +89,54 @@ class nav_mydayFragment : Fragment() {
         view_press = view.findViewById(R.id.press)
         view_hum = view.findViewById(R.id.hum)
 
+        if(MyApplication.gcity==null){
+
+        }
+        else {
+            api_key("https://api.openweathermap.org/data/2.5/weather?q=${MyApplication.gcity}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+        }
+
+        if(MyApplication.glat==null && MyApplication.glon==null){
+
+        }else {
+            api_key("https://api.openweathermap.org/data/2.5/weather?lat=${MyApplication.glat}&lon=${MyApplication.glon}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+        }
+
         search_floating?.setOnClickListener {
             val imm = getSystemService(requireView().context, InputMethodManager::class.java)
             imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
-            api_key(search!!.text.toString())
+            City=(search!!.text.toString())
+            MyApplication.gcity=City
+            api_key("https://api.openweathermap.org/data/2.5/weather?q=$City&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+            MyApplication.glat=null
+            MyApplication.glon=null
         }
+
+        button=view.findViewById(R.id.button)
+        fusedLocationProviderClient = activity?.let {
+            LocationServices.getFusedLocationProviderClient(
+                it
+            )
+        }!!
+        button?.setOnClickListener {
+            Log.d("Debug:",CheckPermission().toString())
+            Log.d("Debug:",isLocationEnabled().toString())
+
+            RequestPermission()
+            getLastLocation()
+            MyApplication.gcity=null
+
+        }
+
 
     }
 
-    private fun api_key(City: String) {
+     fun api_key(Key: String) {
         val client = OkHttpClient()
+
+
         val request = Request.Builder()
-            .url("https://api.openweathermap.org/data/2.5/weather?q=$City&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
-                //.url("https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+            .url(Key)
             .get()
             .build()
         val policy =
@@ -125,12 +162,24 @@ class nav_mydayFragment : Fragment() {
                         val Temperature = temp1.getDouble("temp")
                         val pressure = temp1.getDouble("pressure")
                         val humidity = temp1.getDouble("humidity")
+                        val Town = json.getString("name")
 
                         fun String.capitalizeWords(): String = split(" ").map { it.toLowerCase().capitalize() }.joinToString(" ")
 
-                        val CapCity = City.capitalizeWords()
+                        val CapCity = Town?.capitalizeWords()
 
-                        view_city?.let { setText(it, CapCity) }
+                        view_city?.let {
+                            if (CapCity != null) {
+                                setText(it, CapCity)
+
+                            }
+                        }
+                        MyApplication.city=CapCity
+                        MyApplication.weather=icons
+                        MyApplication.hum=humidity
+                        MyApplication.press=pressure
+                        MyApplication.temp=Temperature
+
                         val temps =
                             Math.round(Temperature).toString() + "°C"
                         view_temp?.let { setText(it, temps) }
@@ -151,7 +200,7 @@ class nav_mydayFragment : Fragment() {
         }
     }
 
-    private fun setText(text: TextView, value: String) {
+    fun setText(text: TextView, value: String) {
         this.activity?.runOnUiThread(Runnable { text.text = value })
     }
 
@@ -182,6 +231,112 @@ class nav_mydayFragment : Fragment() {
             }
         })
     }
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    fun getLastLocation(){
+
+        if(CheckPermission()){
+            if(isLocationEnabled()){
+
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
+                    var location:Location? = task.result
+                    if(location == null){
+                        NewLocationData()
+                    }else{
+                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
+                        lat=location.latitude
+                        lon=location.longitude
+                        api_key("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
+                        MyApplication.glat=lat
+                        MyApplication.glon=lon
+                        CurrentLoc?.text  = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
+                    }
+                }
+            }else{
+                Toast.makeText(context,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            RequestPermission()
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    fun NewLocationData(){
+        var locationRequest =  LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
+        fusedLocationProviderClient = activity?.let {
+            LocationServices.getFusedLocationProviderClient(
+                it
+            )
+        }!!
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            locationRequest,locationCallback,Looper.myLooper()
+        )
+    }
+
+
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(locationResult: LocationResult) {
+            var location: Location = locationResult.lastLocation
+            Log.d("Debug:","your last last location: "+ location.longitude.toString())
+        }
+    }
+
+    private fun CheckPermission():Boolean{
+        if(
+            context?.let { ActivityCompat.checkSelfPermission(it,android.Manifest.permission.ACCESS_COARSE_LOCATION) } == PackageManager.PERMISSION_GRANTED ||
+            context?.let { ActivityCompat.checkSelfPermission(it,android.Manifest.permission.ACCESS_FINE_LOCATION) } == PackageManager.PERMISSION_GRANTED
+        ){
+            return true
+        }
+
+        return false
+
+    }
+
+    fun RequestPermission(){
+        activity?.let {
+            ActivityCompat.requestPermissions(
+                it,
+                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSION_ID
+            )
+        }
+    }
+
+    fun isLocationEnabled():Boolean{
+        var locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == PERMISSION_ID){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("Debug:","You have the Permission")
+            }
+        }
+    }
+
+    private fun getCityName(lat: Double,long: Double):String{
+        var cityName:String = ""
+        var countryName = ""
+        var geoCoder = Geocoder(context, Locale.getDefault())
+        var Adress = geoCoder.getFromLocation(lat,long,3)
+
+        cityName = Adress.get(0).locality
+        countryName = Adress.get(0).countryName
+        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
+        return cityName
+    }
+
 
     companion object {
         /**
@@ -201,8 +356,7 @@ class nav_mydayFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-        private val TAG = "LocationProvider"
-        private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
+
     }
 }
 

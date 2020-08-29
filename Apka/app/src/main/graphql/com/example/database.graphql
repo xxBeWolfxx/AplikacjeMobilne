@@ -7,3 +7,35 @@ query TaskDetails {
         text
     }
 }
+
+mutation SaveTasks($nameT:String!,$idT:ID!,$textT:String)
+{
+    updateTask(where: {id: $idT},data: {name: $nameT text: $textT}){
+        id
+        name
+        text
+    }
+}
+
+mutation DeleteTask($idT:ID!)
+{
+    deleteTask(where: {id:$idT}){
+        id
+        name
+        type
+        date
+        text
+    }
+}
+
+mutation CreateTask($nameT:String!,$textT:String, $dataT:DateTime!, $typeT:String!)
+{
+    createTask(data: {createdAt: "", updatedAt: "", name: $nameT, text:$textT, type: $typeT, date: $dataT})
+    {
+        id
+        name
+        type
+        date
+        text
+    }
+}
