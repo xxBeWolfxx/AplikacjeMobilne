@@ -44,11 +44,7 @@ class MainActivity : AppCompatActivity() {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
         }
-<<<<<<< HEAD
 
-=======
-        val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
->>>>>>> origin/master
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -64,11 +60,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-<<<<<<< HEAD
-    }
-
-=======
->>>>>>> origin/master
 
     }
 
@@ -87,14 +78,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-<<<<<<< HEAD
-    fun getTasks(): ArrayList<DoTAsk>
-    {
-=======
+
     fun getTasks(): ArrayList<DoTAsk> {
-
-
->>>>>>> origin/master
         return TaskManger
     }
 
@@ -112,14 +97,7 @@ class MainActivity : AppCompatActivity() {
             job = DoTAsk().dataConverter(job)
             arrayTask?.add(variable, job)
             variable += 1
-<<<<<<< HEAD
-           // Log.d("Kupa", item.name[3].toString())
-            if (variable == database.data?.tasks?.size)
-        {
-            DoTAsk().dataConverter(job)
-            variable = 0
-        } //
-=======
+
             if (variable == database.data?.tasks?.size) {
                 DoTAsk().dataConverter(job)
                 variable = 0
@@ -127,20 +105,14 @@ class MainActivity : AppCompatActivity() {
         }
             arrayTask?.forEach { it.title.let { it -> Log.d("Checking:", it) } }
             return arrayTask!!
->>>>>>> origin/master
+
         }
 
 
 
-<<<<<<< HEAD
+
 
 
 
 
 }
-
-=======
-}
-
-
->>>>>>> origin/master

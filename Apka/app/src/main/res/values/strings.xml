@@ -15,9 +15,12 @@
     <string name="task">Task</string>
     <string name="myday">My Day</string>
     <string name="pomodoro">Pomodoro</string>
-<<<<<<< HEAD
-=======
-    <string name="latitudeBabel">Latitude</string>
-    <string name="longitudeBabel">Longitude</string>
->>>>>>> origin/master
+    <string-array name="type">
+        <item>none</item>
+        <item>Meeting</item>
+        <item>Shop list</item>
+        <item>To do</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>
