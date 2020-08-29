@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
@@ -9,216 +9,242 @@
     android:backgroundTintMode="screen"
     android:minWidth="1080dp"
     android:minHeight="1920dp"
+    android:orientation="vertical"
     tools:context=".TaskFragment">
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#42000000">
+        android:background="#33000000"
+        android:minWidth="1080dp"
+        android:minHeight="1920dp">
+
+        <View
+
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/Adder"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="460dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="7dp"
             android:clickable="true"
             android:src="@android:drawable/ic_input_add"
             app:backgroundTint="#01574F"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="200dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="15dp"
+            app:cardBackgroundColor="#E9ECEF"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="#E9ECEF"
-                app:cardCornerRadius="10dp">
+                android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/Card_Date"
+                    android:layout_width="100dp"
+                    android:layout_height="32dp"
+                    android:layout_above="@+id/Card_Text"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="75dp"
+                    app:cardBackgroundColor="#FFFFFF">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/Card_Date"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="60dp"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/Date"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="50">
-
-                                <Button
-                                    android:id="@+id/button_date"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="#00FFFFFF" />
-
-                                <TextView
-                                    android:id="@+id/dateTask"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="DD-MM-YYYY"
-                                    android:textAlignment="center" />
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/Time"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="50">
-
-                                <Button
-                                    android:id="@+id/button_time"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="#00FFFFFF" />
-
-                                <TextView
-                                    android:id="@+id/timerTask"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="00:00"
-                                    android:textAlignment="center" />
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/Card_Text"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/typeTask"
-                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/Date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="50">
+
+                            <Button
+                                android:id="@+id/button_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#00FFFFFF" />
+
+                            <TextView
+                                android:id="@+id/dateTask"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="DD-MM-YYYY"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/Time"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="50">
+
+                            <Button
+                                android:id="@+id/button_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#00FFFFFF" />
+
+                            <TextView
+                                android:id="@+id/timerTask"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="00:00"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/Card_Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/typeTask"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="7dp">
+
+                    <EditText
+                        android:id="@+id/infoText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="7dp">
-
-                        <EditText
-                            android:id="@+id/infoText"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="7dp"
-                            android:autoLink="phone|email"
-                            android:background="#00FFFFFF"
-                            android:gravity="top|left"
-                            android:inputType="textMultiLine"
-                            android:lines="8"
-                            android:singleLine="false"
-                            android:text="Text"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </androidx.cardview.widget.CardView>
-
-                    <ImageView
-                        android:id="@+id/imageViewcardPresent"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="#FFFFFF"
-                        android:src="@drawable/ic_baseline_emoji_emotions_24" />
-
-                    <EditText
-                        android:id="@+id/titleTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@+id/imageViewcardPresent"
-                        android:text="Line 1"
+                        android:layout_marginBottom="7dp"
+                        android:autoLink="phone|email"
+                        android:background="#00FFFFFF"
+                        android:gravity="top|left"
+                        android:inputType="textMultiLine"
+                        android:lines="8"
+                        android:singleLine="false"
+                        android:text="Text"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp" />
 
-                    <Spinner
-                        android:id="@+id/typeTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/titleTask"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="false"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginTop="5dp"
-                        android:entries="@array/type"
-                        android:spinnerMode="dropdown"
-                        android:textColor="@android:color/black"
-                        android:textSize="8sp" />
+                </androidx.cardview.widget.CardView>
 
-                    <ImageButton
-                        android:id="@+id/Remover"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="#02000000"
-                        android:src="@android:drawable/ic_delete" />
+                <ImageView
+                    android:id="@+id/imageViewcardPresent"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#FFFFFF"
+                    android:src="@drawable/ic_baseline_emoji_emotions_24" />
 
-                    <ImageButton
-                        android:id="@+id/saveBtn"
-                        android:layout_width="40dp"
-                        android:layout_height="39dp"
-                        android:layout_below="@+id/Remover"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="-2dp"
-                        android:layout_marginEnd="-1dp"
-                        android:src="@android:drawable/ic_menu_save" />
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                <EditText
+                    android:id="@+id/titleTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="90dp"
+                    android:layout_toEndOf="@+id/imageViewcardPresent"
+                    android:ellipsize="end"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:text="Line 1"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/linearLayout2"
+                <Spinner
+                    android:id="@+id/typeTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleTask"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="false"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="5dp"
+                    android:entries="@array/type"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@android:color/black"
+                    android:textSize="8sp" />
+
+                <ImageButton
+                    android:id="@+id/Remover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#00000000"
+                    android:src="@android:drawable/ic_delete" />
+
+                <ImageButton
+                    android:id="@+id/saveBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_toStartOf="@+id/Remover"
+                    android:background="#00FFFFFF"
+                    android:src="@android:drawable/ic_menu_save" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Card_Recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            app:layout_constraintWidth_max="wrap">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RycyclerTask"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp">
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/itemcard" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RycyclerTask"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:scrollbars="vertical"
-                    tools:listitem="@layout/itemcard" />
-            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>
+
+

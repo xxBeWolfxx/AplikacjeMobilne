@@ -24,10 +24,11 @@
             android:id="@+id/text_view_card1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:layout_toEndOf="@id/imageViewcard"
             android:text="Line 1"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -35,10 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_card1"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/imageViewcard"
             android:text="Line 2"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
 
     </RelativeLayout>

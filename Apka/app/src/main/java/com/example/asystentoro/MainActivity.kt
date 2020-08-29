@@ -1,5 +1,7 @@
 package com.example.asystentoro
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -7,17 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.api.toInput
 import com.apollographql.apollo.coroutines.toDeferred
-import com.example.SaveTasksMutation
 import com.example.TaskDetailsQuery
 import com.google.android.material.navigation.NavigationView
 
@@ -50,6 +49,12 @@ class MainActivity : AppCompatActivity() {
             MyApplication.globalTask = TaskManger
 
         }
+        val facebook = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"))
+//        startActivity(facebook)
+        val instagram = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com"))
+//        startActivity(instagram)
+        val twitter = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"))
+//        startActivity(twitter)
 
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -59,12 +64,11 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro
+                R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro, R.id.nav_facebook, R.id.nav_instagram, R.id.nav_twitter
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
 
 
     }
@@ -115,5 +119,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+}
+
+private fun NavDeepLinkBuilder.setDestination(navDeepLink: NavDeepLink) {
 
 }
