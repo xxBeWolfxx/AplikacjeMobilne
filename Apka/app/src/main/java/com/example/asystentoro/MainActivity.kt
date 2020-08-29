@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
-
         val apolloClient = ApolloClient.builder()
             .serverUrl("https://api-eu-central-1.graphcms.com/v2/ckd4epu1q0meu01xr4wx3arzu/master?query=%7B%0A%20%20tasks%20%7B%0A%20%20%20%20name%0A%20%20%20%20type%0A%20%20%20%20date%0A%20%20%20%20text%0A%20%20%20%20%0A%20%20%7D%0A%7D%0A")
             .build()
@@ -45,7 +44,11 @@ class MainActivity : AppCompatActivity() {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
         }
+<<<<<<< HEAD
 
+=======
+        val s: DoTAsk = (this.application as MyApplication).getGlobalTask()//GLOBAL declaration
+>>>>>>> origin/master
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -61,15 +64,19 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
+<<<<<<< HEAD
+    }
+
+=======
+>>>>>>> origin/master
+
     }
 
 
 
 
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present. mmm
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -80,18 +87,20 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+<<<<<<< HEAD
     fun getTasks(): ArrayList<DoTAsk>
     {
+=======
+    fun getTasks(): ArrayList<DoTAsk> {
+
+
+>>>>>>> origin/master
         return TaskManger
     }
 
     private fun convertDatabse(database: Response<TaskDetailsQuery.Data>): ArrayList<DoTAsk> {
-//        var arrayTask: ArrayList<DoTAsk> = ArrayList()
         val arrayTask = database.data?.tasks?.size?.let { ArrayList<DoTAsk>(it) }
-
         var variable: Int = 0
-
-
         for (item in database.data?.tasks!!) {
             var job: DoTAsk = DoTAsk()
             job.title = item.name
@@ -102,26 +111,36 @@ class MainActivity : AppCompatActivity() {
             job.number = variable
             job = DoTAsk().dataConverter(job)
             arrayTask?.add(variable, job)
-            //arrayTask!![variable]?.title = item.name
             variable += 1
+<<<<<<< HEAD
            // Log.d("Kupa", item.name[3].toString())
             if (variable == database.data?.tasks?.size)
         {
             DoTAsk().dataConverter(job)
             variable = 0
         } //
+=======
+            if (variable == database.data?.tasks?.size) {
+                DoTAsk().dataConverter(job)
+                variable = 0
+            }
+        }
+            arrayTask?.forEach { it.title.let { it -> Log.d("Checking:", it) } }
+            return arrayTask!!
+>>>>>>> origin/master
         }
 
 
-//
-        arrayTask?.forEach { it.title.let { it -> Log.d("Pa na to Kotku:", it) } }
-        return arrayTask!!
-    }
 
-
+<<<<<<< HEAD
 
 
 
 
 }
 
+=======
+}
+
+
+>>>>>>> origin/master

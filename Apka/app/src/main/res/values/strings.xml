@@ -15,4 +15,9 @@
     <string name="task">Task</string>
     <string name="myday">My Day</string>
     <string name="pomodoro">Pomodoro</string>
+<<<<<<< HEAD
+=======
+    <string name="latitudeBabel">Latitude</string>
+    <string name="longitudeBabel">Longitude</string>
+>>>>>>> origin/master
 </resources>
