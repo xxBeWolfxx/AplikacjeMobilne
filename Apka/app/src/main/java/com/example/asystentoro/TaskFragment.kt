@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_task.*
+import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +33,8 @@ class TaskFragment : Fragment() {
     private var param2: String? = null
     var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
     var RecyclerTasks: RecyclerView? = null
+    lateinit var exampleList: ArrayList<ItemCardView>
+
 
 
 
@@ -42,11 +47,9 @@ class TaskFragment : Fragment() {
 
         }
 
-
-
-
-
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,12 +67,22 @@ class TaskFragment : Fragment() {
         val ace: MainActivity? = activity as MainActivity?
         myTaskFromMainActivity = ace?.getTasks()!!
 
+
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
-        val exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
-        RecyclerTasks?.adapter = MyAdapter(exampleList)
-        RecyclerTasks?.layoutManager = LinearLayoutManager(context)
+        exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
+        val adapter = MyAdapter(exampleList)
+
+//       RecyclerTasks?.adapter = MyAdapter(exampleList)
+        RecyclerTasks?.adapter = adapter
+        RecyclerTasks?.layoutManager = LinearLayoutManager(view.context)
         RecyclerTasks?.setHasFixedSize(true)
 
+        var btn:ImageButton = view.findViewById(R.id.Adder)
+        btn.setOnClickListener{
+            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO")
+            exampleList.add(exampleList.size,newItem)
+            adapter.notifyItemChanged(exampleList.size)
+        }
 
 
 
@@ -81,6 +94,24 @@ class TaskFragment : Fragment() {
 
 
 
+
+
+    }
+
+    fun insertItem(view: View)
+    {
+        val index: Int = Random.nextInt(8)
+        val newItem = ItemCardView(
+            R.drawable.ic_arrow_upward_24,
+            "Kupa",
+            "Frajer"
+        )
+
+
+    }
+
+    fun removeItem(view: View)
+    {
 
     }
 

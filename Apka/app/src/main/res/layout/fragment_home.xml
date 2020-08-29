@@ -24,8 +24,9 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_weight="50"
-            app:cardBackgroundColor="#B3FFFFFF"
-            app:cardCornerRadius="20dp">
+            app:cardBackgroundColor="#CCFFFFFF"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
 
             <Button
                 android:id="@+id/btnPomodoro"
@@ -46,8 +47,9 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="15dp"
             android:layout_weight="50"
-            app:cardBackgroundColor="#B3FFFFFF"
-            app:cardCornerRadius="20dp">
+            app:cardBackgroundColor="#CCFFFFFF"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
 
             <Button
                 android:id="@+id/btnTasks"
@@ -76,8 +78,9 @@
         android:layout_height="200dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        app:cardBackgroundColor="#99FFFFFF"
+        app:cardBackgroundColor="#CCFFFFFF"
         app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view4">
@@ -86,7 +89,7 @@
             android:id="@+id/btnDay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#00000000"
+            android:background="#00D31919"
             android:fontFamily="sans-serif-smallcaps"
             android:text="My Day"
             android:textColor="#1B1B1B"
@@ -195,7 +198,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#42000000"
+        android:background="#33000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

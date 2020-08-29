@@ -15,19 +15,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#42000000" >
+        android:background="#42000000">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="389dp"
-            android:layout_height="424dp"
+            android:layout_width="388dp"
+            android:layout_height="328dp"
+            android:layout_below="@+id/constraintLayout"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="9dp"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RycyclerTask"
@@ -36,37 +34,112 @@
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 tools:listitem="@layout/itemcard" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="387dp"
-            android:layout_height="239dp"
+            android:layout_width="381dp"
+            android:layout_height="317dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="12dp">
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="17dp">
 
-            <ImageButton
-                android:id="@+id/Adder"
-                android:layout_width="43dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="344dp"
-                android:background="#02000000"
-                android:contentDescription="TODO"
-                android:src="@android:drawable/ic_input_add" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="245dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="66dp"
+                app:cardCornerRadius="10dp">
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="51dp"
-                android:layout_below="@+id/Adder"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="6dp"
-                android:background="#02000000"
-                android:src="@android:drawable/ic_delete" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageViewcardPresent"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_baseline_emoji_emotions_24" />
+
+                    <EditText
+                        android:id="@+id/titleTask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@id/imageViewcardPresent"
+                        android:text="Line 1"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/typeTask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/titleTask"
+                        android:layout_alignStart="@id/titleTask"
+                        android:layout_marginTop="2dp"
+                        android:text="Meeting"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/typeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="213dp"
+                        android:layout_below="@id/typeTask"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="7dp"
+                        android:autoLink="phone|email"
+                        android:gravity="top|left"
+                        android:inputType="textMultiLine"
+                        android:lines="8"
+                        android:singleLine="false"
+                        android:text="Text"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/timerTask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="-310dp"
+                        android:layout_toStartOf="@+id/Adder"
+                        android:text="DD-MM-YYYY"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+
+                    <ImageButton
+                        android:id="@+id/Adder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="344dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="#02000000"
+                        android:src="@android:drawable/ic_input_add" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/Adder"
+                        android:layout_alignEnd="@id/Adder"
+                        android:layout_marginTop="0dp"
+                        android:background="#02000000"
+                        android:src="@android:drawable/ic_delete" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </RelativeLayout>
 
