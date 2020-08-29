@@ -17,6 +17,20 @@
         android:layout_height="match_parent"
         android:background="#42000000">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Adder"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="right"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="460dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="#01574F"
+            app:fabSize="mini" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,7 +57,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="60dp"
-                        android:layout_toStartOf="@+id/Adder"
                         app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
@@ -104,10 +117,10 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="7dp" >
+                        android:layout_marginBottom="7dp">
 
                         <EditText
-                            android:id="@+id/typeText"
+                            android:id="@+id/infoText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
@@ -164,26 +177,25 @@
                         android:textSize="8sp" />
 
                     <ImageButton
-                        android:id="@+id/Adder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="43dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="344dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="4dp"
-                        android:background="#02000000"
-                        android:src="@android:drawable/ic_input_add" />
-
-                    <ImageButton
                         android:id="@+id/Remover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/Adder"
-                        android:layout_alignEnd="@id/Adder"
-                        android:layout_marginTop="0dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
                         android:background="#02000000"
                         android:src="@android:drawable/ic_delete" />
+
+                    <ImageButton
+                        android:id="@+id/saveBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="39dp"
+                        android:layout_below="@+id/Remover"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="-2dp"
+                        android:layout_marginEnd="-1dp"
+                        android:src="@android:drawable/ic_menu_save" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 

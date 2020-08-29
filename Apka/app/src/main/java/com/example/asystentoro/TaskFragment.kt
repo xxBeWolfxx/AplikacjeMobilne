@@ -3,6 +3,7 @@ package com.example.asystentoro
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,6 +51,10 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     var Spinner: Spinner? = null
     var formate = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
     var timeFormat = SimpleDateFormat("hh:mm a", Locale.UK)
+    var clickposition:Int = -1
+    var titleTask:EditText? = null
+    var textInput:EditText? = null
+    var imageViewcardPresent:ImageView? = null
 
 
 
@@ -75,6 +80,10 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        titleTask = view.findViewById(R.id.titleTask)
+        textInput = view.findViewById(R.id.infoText)
+        imageViewcardPresent = view.findViewById(R.id.imageViewcardPresent)
+
 
         myTaskFromMainActivity = MyApplication.globalTask!!
 //        apolloclientTask = MyApplication.globalApolloClient!!
@@ -94,9 +103,9 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
         val btnAdd:ImageButton = view.findViewById(R.id.Adder)
         btnAdd.setOnClickListener{
-            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO", exampleList.size)
-            exampleList.add(newItem.ID,newItem)
-            adapter.notifyDataSetChanged()
+//            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO", exampleList.size)
+//            exampleList.add(newItem.ID,newItem)
+//            adapter.notifyDataSetChanged()
 
             if (isclicked)
             {
@@ -200,12 +209,30 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     override fun onItemClick(position: Int) {
         Log.d("Klik", "Position $position")
         isclicked = true
+        clickposition = position
+        printingCard(position)
         val clickedItem= exampleList[position]
         clickedItem.text1 = "POKAŻ CYCKI"
         adapter.notifyDataSetChanged()
 
     }
 
+    fun printingCard(position: Int)
+    {
+        titleTask?.setText(myTaskFromMainActivity[position].title)
+        textInput?.setText(myTaskFromMainActivity[position].text)
+        imageViewcardPresent?.setImageResource(when (myTaskFromMainActivity[position].title.toLowerCase()) {
+            "lekarz" -> R.drawable.cloud
+            "baba" -> R.drawable.d01d
+            "gg" -> R.drawable.d04d
+            else -> R.drawable.common_google_signin_btn_icon_dark
+        }
+        )
+
+
+
+        myTaskFromMainActivity[position]
+    }
 
     companion object {
         /**
