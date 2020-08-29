@@ -30,7 +30,7 @@ mutation DeleteTask($idT:ID!)
 
 mutation CreateTask($nameT:String!,$textT:String, $dataT:DateTime!, $typeT:String!)
 {
-    createTask(data: {createdAt: "", updatedAt: "", name: $nameT, text:$textT, type: $typeT, date: $dataT})
+    createTask(data: {name: $nameT, text:$textT, type: $typeT, date: $dataT})
     {
         id
         name

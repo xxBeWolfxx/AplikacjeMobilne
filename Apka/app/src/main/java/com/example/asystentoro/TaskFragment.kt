@@ -23,6 +23,9 @@ import com.example.SaveTasksMutation
 import kotlinx.android.synthetic.main.fragment_task.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.lifecycle.lifecycleScope
+import com.example.CreateTaskMutation
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,17 +47,28 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     private var param2: String? = null
     var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
     var RecyclerTasks: RecyclerView? = null
+
     lateinit var exampleList: ArrayList<ItemCardView>
     lateinit var adapter: MyAdapter
+
     var apolloclientTask: ApolloClient?=null
     var isclicked:Boolean = false
+    var adding:Boolean = false
+
     var Spinner: Spinner? = null
-    var formate = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
-    var timeFormat = SimpleDateFormat("hh:mm a", Locale.UK)
+    var formate = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
+    var timeFormat = SimpleDateFormat("kk:mm ", Locale.UK)
+
     var clickposition:Int = -1
+
     var titleTask:EditText? = null
     var textInput:EditText? = null
-    var imageViewcardPresent:ImageView? = null
+    var imageViewcardPresent: ImageView? = null
+    var dateTask:TextView? = null
+    var timerTask:TextView? = null
+    var button_date:Button? = null
+    var button_time:Button? = null
+
 
 
 
@@ -78,6 +92,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         return inflater.inflate(R.layout.fragment_task, container, false)
     }
 
+    @SuppressLint("ShowToast")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         titleTask = view.findViewById(R.id.titleTask)
@@ -85,8 +100,12 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         imageViewcardPresent = view.findViewById(R.id.imageViewcardPresent)
 
 
+
+
+
+
+
         myTaskFromMainActivity = MyApplication.globalTask!!
-//        apolloclientTask = MyApplication.globalApolloClient!!
         val ace: MainActivity? = activity as MainActivity?
         apolloclientTask = ace?.getApolloClient()
 
@@ -101,22 +120,65 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         RecyclerTasks?.layoutManager = LinearLayoutManager(view.context)
         RecyclerTasks?.setHasFixedSize(true)
 
-        val btnAdd:ImageButton = view.findViewById(R.id.Adder)
-        btnAdd.setOnClickListener{
-//            val newItem = ItemCardView(R.drawable.circle, "kolo","YOLO", exampleList.size)
-//            exampleList.add(newItem.ID,newItem)
-//            adapter.notifyDataSetChanged()
 
-            if (isclicked)
+
+
+        val btnSev:ImageButton = view.findViewById(R.id.saveBtn)
+        btnSev.setOnClickListener{
+            var newItem:DoTAsk = DoTAsk()
+
+
+            if (!isclicked)
             {
+                if (titleTask?.text.toString() != "") newItem.title = titleTask?.text.toString()
+                else {
+                    Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                newItem.type = Spinner?.getSelectedItem().toString()
+                if (textInput?.text.toString() == "" ) newItem.text = ""
+                else    newItem.text = textInput?.text.toString()
+                newItem.date = dateTask?.text.toString() + "T" + timerTask?.text.toString()
+                newItem = DoTAsk().dataConverter(newItem)
+                newItem.number = myTaskFromMainActivity.size
 
             }
+            val drawable = when (newItem.type?.toLowerCase()) {
+                "meeting" -> R.drawable.cloud
+                "shop list" -> R.drawable.d01d
+                "todo" -> R.drawable.d04d
+                else -> R.drawable.common_google_signin_btn_icon_dark
+            }
+            lifecycleScope.launchWhenResumed{
+            val respone = try {apolloclientTask?.mutate(CreateTaskMutation(newItem.title,newItem.text.toInput(),newItem.date,newItem.type!!))?.toDeferred()?.await()}
+            catch (e:Exception){
+                null
+            }}
+
+            val addItem = ItemCardView(drawable, newItem.title,"Data: ${newItem.day}-${newItem.month}-${newItem.year}   Time: ${newItem.hour}:${newItem.minute}", newItem.number)
+            exampleList.add(addItem.ID,addItem)
+            adapter.notifyDataSetChanged()
+            myTaskFromMainActivity.add(newItem)
+
+            adding = false
+            settingCard(false)
+
+        }
+
+
+
+        val btnAdd:FloatingActionButton = view.findViewById(R.id.Adder)
+        btnAdd.setOnClickListener{
+            adding = true
+            settingCard(true)
+
+
         }
         val btnRem:ImageButton = view.findViewById(R.id.Remover)
         btnRem.setOnClickListener{
             exampleList.removeAt(exampleList.size - 1)
             adapter.notifyDataSetChanged()
-           // apolloclientTask.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput())).toDeferred()
+            //apolloclientTask?.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput()))?.toDeferred()
         }
 
       /////////////////////     SPINER - TYPE        //////////////////
@@ -133,7 +195,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         // Set the drop down view resource
             aadapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        // Finally, data bind the spinner object with dapter
+        // Finally, data bind the spinner object with adapter
         Spinner?.adapter  = aadapter;
 
         // Set an on item selected listener for spinner object
@@ -142,7 +204,16 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
                 // Display the selected item text on text view
 
-                //    text_view3?.text = "Spinner selected : ${parent.getItemAtPosition(position).toString()}"
+
+                if (adding)imageViewcardPresent?.setImageResource(when (parent.getItemAtPosition(position).toString().toLowerCase()) {
+                    "meeting" -> R.drawable.cloud
+                    "shop list" -> R.drawable.d01d
+                    "to do" -> R.drawable.d04d
+                    "other" -> R.drawable.circle
+                    else -> R.drawable.common_google_signin_btn_icon_dark
+                }
+                )
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>){
@@ -153,14 +224,14 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
         /////////////////////     DATE AND TIME        //////////////////
 
-        val button_date:Button = view.findViewById(R.id.button_date)
-        val button_time:Button = view.findViewById(R.id.button_time)
-        val dateTask:TextView = view.findViewById(R.id.dateTask)
-        val timerTask:TextView = view.findViewById(R.id.timerTask)
+        button_date = view.findViewById(R.id.button_date)
+        button_time = view.findViewById(R.id.button_time)
+        dateTask = view.findViewById(R.id.dateTask)
+        timerTask = view.findViewById(R.id.timerTask)
 
         val now = Calendar.getInstance()
 
-        button_date.setOnClickListener {
+        button_date?.setOnClickListener {
             val datePicker = context?.let { it1 ->
                 DatePickerDialog(
                     it1, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -168,7 +239,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                         selectedDate.set(Calendar.YEAR, year)
                         selectedDate.set(Calendar.MONTH, month)
                         selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                        dateTask.text = formate.format(selectedDate.time)
+                        dateTask?.text = formate.format(selectedDate.time)
                     },
                     now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
                 )
@@ -176,26 +247,26 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
             datePicker!!.show()
             try {
-                if (button_date.text != "Show Dialog") {
-                    val date = timeFormat.parse(button_date.text.toString())
-                    now.time = date
+                if (button_date?.text != "Show Dialog") {
+                    val date = timeFormat.parse(button_date?.text.toString())
+                    now.time = date!!
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-        button_time.setOnClickListener {
+        button_time?.setOnClickListener {
         val timePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 val selectedTime = Calendar.getInstance()
                 selectedTime.set(Calendar.HOUR_OF_DAY,hourOfDay)
                 selectedTime.set(Calendar.MINUTE,minute)
-                timerTask.text = timeFormat.format(selectedTime.time)
+                timerTask?.text = timeFormat.format(selectedTime.time)
             },
                 now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),false)
             timePicker.show()
 
         }
-
+        settingCard(false)
 
         //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,10 +276,38 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
     }
 
+    fun settingCard(set:Boolean)
+    {
+        titleTask?.setText("")
+        textInput?.setText("")
+        Spinner?.setSelection(0)
+        dateTask?.text = "DD-MM-YYYY"
+        timerTask?.text = "00:00"
+
+
+        titleTask?.isEnabled = set
+        textInput?.isEnabled = set
+        button_date?.isEnabled = set
+        button_time?.isEnabled = set
+
+
+
+
+        Spinner?.setEnabled(set)
+        if(!set) Spinner?.setAlpha(0.5f)
+        else Spinner?.setAlpha(1f)
+        Spinner?.isClickable = set
+
+
+
+        if (!set) imageViewcardPresent?.setImageResource(R.drawable.ic_baseline_emoji_emotions_24)
+
+    }
 
     override fun onItemClick(position: Int) {
         Log.d("Klik", "Position $position")
         isclicked = true
+        adding = false
         clickposition = position
         printingCard(position)
         val clickedItem= exampleList[position]
@@ -221,15 +320,22 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     {
         titleTask?.setText(myTaskFromMainActivity[position].title)
         textInput?.setText(myTaskFromMainActivity[position].text)
-        imageViewcardPresent?.setImageResource(when (myTaskFromMainActivity[position].title.toLowerCase()) {
-            "lekarz" -> R.drawable.cloud
-            "baba" -> R.drawable.d01d
-            "gg" -> R.drawable.d04d
+        imageViewcardPresent?.setImageResource(when (myTaskFromMainActivity[position].type?.toLowerCase()) {
+            "meeting" -> R.drawable.cloud
+            "shop list" -> R.drawable.d01d
+            "to do" -> R.drawable.d04d
+            "other" -> R.drawable.circle
             else -> R.drawable.common_google_signin_btn_icon_dark
         }
         )
 
-
+        Spinner?.setSelection(when (myTaskFromMainActivity[position].type?.toLowerCase()){
+            "meeting" -> 1
+            "shop list" -> 2
+            "to do" -> 3
+            "other" -> 4
+            else -> 0
+        })
 
         myTaskFromMainActivity[position]
     }
