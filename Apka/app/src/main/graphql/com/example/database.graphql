@@ -8,9 +8,9 @@ query TaskDetails {
     }
 }
 
-mutation SaveTasks($nameT:String!,$idT:ID!,$textT:String)
+mutation SaveTasks($nameT:String!,$idT:ID!,$textT:String,$dataT:DateTime,$typeT:String)
 {
-    updateTask(where: {id: $idT},data: {name: $nameT text: $textT}){
+    updateTask(where: {id: $idT},data: {name: $nameT, text: $textT,date: $dataT, type:$typeT}){
         id
         name
         text
@@ -38,4 +38,6 @@ mutation CreateTask($nameT:String!,$textT:String, $dataT:DateTime!, $typeT:Strin
         date
         text
     }
+
+
 }

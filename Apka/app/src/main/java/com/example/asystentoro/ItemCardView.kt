@@ -1,3 +1,3 @@
 package com.example.asystentoro
 
-data class ItemCardView (val imageResource: Int, var text1: String, val text2: String, val ID: Int)
+data class ItemCardView (var imageResource: Int, var text1: String, var text2: String, val ID: Int)

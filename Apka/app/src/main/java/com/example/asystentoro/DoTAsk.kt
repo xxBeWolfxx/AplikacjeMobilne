@@ -43,10 +43,11 @@ class DoTAsk() {
         val list = ArrayList<ItemCardView>()
         for (i in 0 until tasks.size) {
             val drawable = when (tasks[i].type?.toLowerCase()) {
-                "meeting" -> R.drawable.cloud
-                "shop list" -> R.drawable.d01d
-                "todo" -> R.drawable.d04d
-                else -> R.drawable.common_google_signin_btn_icon_dark
+                "meeting" -> R.drawable.meeting
+                "shop list" -> R.drawable.shoplist
+                "to do" -> R.drawable.todo
+                "other" -> R.drawable.qmark
+                else -> R.drawable.circle
             }
             val item = ItemCardView(drawable, tasks[i].title, "Data: ${tasks[i].day}-${tasks[i].month}-${tasks[i].year}   Time: ${tasks[i].hour}:${tasks[i].minute}", tasks[i].number)
             list += item
