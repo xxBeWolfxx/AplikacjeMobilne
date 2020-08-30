@@ -47,20 +47,22 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     private var param1: String? = null
     private var param2: String? = null
     var myTaskFromMainActivity:ArrayList<DoTAsk> = ArrayList()
-    var RecyclerTasks: RecyclerView? = null
-
+//*****************variables to set RecyclerView**********************
     lateinit var exampleList: ArrayList<ItemCardView>
+    var RecyclerTasks: RecyclerView? = null
     lateinit var adapter: MyAdapter
 
-    var apolloclientTask: ApolloClient?=null
+    var apolloclientTask: ApolloClient?=null //client to Database
+//******************variables to check if buttons are clicked*************************
     var isclicked:Boolean = false
     var adding:Boolean = false
 
-    var Spinner: Spinner? = null
+    var Spinner: Spinner? = null // spinner with types of tasks
+//*******************variables to set date and time************************************
     var formate = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
     var timeFormat = SimpleDateFormat("kk:mm ", Locale.UK)
 
-    var clickposition:Int = -1
+    var clickposition:Int = -1 //position of list in RecyclerView
 
     var titleTask:EditText? = null
     var textInput:EditText? = null
@@ -96,27 +98,22 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     @SuppressLint("ShowToast")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//#################Initialization of variables#############################
         titleTask = view.findViewById(R.id.titleTask)
         textInput = view.findViewById(R.id.infoText)
         imageViewcardPresent = view.findViewById(R.id.imageViewcardPresent)
 
-
-
-
-
-
-
-        myTaskFromMainActivity = MyApplication.globalTask!!
+        myTaskFromMainActivity = MyApplication.globalTask!! //assign global variables to local because tasks's information are needed in three fragments
+//              Get apolloClient from MainActivity
         val ace: MainActivity? = activity as MainActivity?
         apolloclientTask = ace?.getApolloClient()
 
 
-
+//              Set RecyclerView with list of components from tasks
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
         exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
         adapter = MyAdapter(exampleList, this)
 
-//       RecyclerTasks?.adapter = MyAdapter(exampleList)
         RecyclerTasks?.adapter = adapter
         RecyclerTasks?.layoutManager = LinearLayoutManager(view.context)
         RecyclerTasks?.setHasFixedSize(true)
@@ -133,12 +130,17 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             {
                 if (titleTask?.text.toString() != "") newItem.title = titleTask?.text.toString()
                 else {
-                    Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "WARNING!! Title is empty", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 newItem.type = Spinner?.getSelectedItem().toString()
                 if (textInput?.text.toString() == "" ) newItem.text = ""
                 else    newItem.text = textInput?.text.toString()
+                if(dateTask?.text.toString() + timerTask?.text.toString() == "DD-MM-YYYY" + "00:00")
+                {
+                    Toast.makeText(context, "WARNING!! You have to set time and day", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
                 newItem.date = dateTask?.text.toString() + "T" + timerTask?.text.toString()
                 newItem = DoTAsk().dataConverter(newItem)
                 newItem.number = myTaskFromMainActivity.size
@@ -163,7 +165,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             else{
                 if (titleTask?.text.toString() != "") myTaskFromMainActivity[clickposition].title = titleTask?.text.toString()
                 else {
-                    Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "WARNING!! Title is empty", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 myTaskFromMainActivity[clickposition].type = Spinner?.getSelectedItem().toString()
@@ -171,12 +173,6 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                 else    myTaskFromMainActivity[clickposition].text = textInput?.text.toString()
                 myTaskFromMainActivity[clickposition].date = dateTask?.text.toString() + "T" + timerTask?.text.toString()
                 myTaskFromMainActivity[clickposition] = DoTAsk().dataConverter(myTaskFromMainActivity[clickposition])
-                val drawable = when (myTaskFromMainActivity[clickposition].type?.toLowerCase()) {
-                    "meeting" -> R.drawable.cloud
-                    "shop list" -> R.drawable.d01d
-                    "to do" -> R.drawable.d04d
-                    else -> R.drawable.common_google_signin_btn_icon_dark
-                }
                 val clickedItem = exampleList[clickposition]
                 clickedItem.text1 = myTaskFromMainActivity[clickposition].title
                 clickedItem.text2 = "Data: ${myTaskFromMainActivity[clickposition].day}-${myTaskFromMainActivity[clickposition].month}-${myTaskFromMainActivity[clickposition].year}   Time: ${myTaskFromMainActivity[clickposition].hour}:${myTaskFromMainActivity[clickposition].minute}"
@@ -223,7 +219,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
         val btnRem:ImageButton = view.findViewById(R.id.Remover)
         btnRem.setOnClickListener{
-            if (!adding) {
+            if (!adding && !isclicked) {
                 Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -388,8 +384,17 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             else -> R.drawable.circle
         }
         )
-        dateTask?.text = "${myTaskFromMainActivity[position].year}-${myTaskFromMainActivity[position].month}-${myTaskFromMainActivity[position].day}"
-        timerTask?.text = "${myTaskFromMainActivity[position].hour}:${myTaskFromMainActivity[position].minute}"
+        if (myTaskFromMainActivity[position].date != "Urgent") {
+            dateTask?.text =
+                "${myTaskFromMainActivity[position].year}-${myTaskFromMainActivity[position].month}-${myTaskFromMainActivity[position].day}"
+            timerTask?.text =
+                "${myTaskFromMainActivity[position].hour}:${myTaskFromMainActivity[position].minute}"
+        }
+        else
+        {
+            dateTask?.text = "Urgent"
+            timerTask?.text = "  !!!"
+        }
 
 
 

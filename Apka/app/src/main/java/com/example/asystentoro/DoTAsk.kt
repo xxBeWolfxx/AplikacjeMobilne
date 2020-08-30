@@ -23,18 +23,21 @@ class DoTAsk() {
 //        this.hour = hour
 //        this.minute=minute
 //        this.type=type
+
 //    }
 
     fun dataConverter(tasks: DoTAsk): DoTAsk
     {
-
-        val format = tasks.date.split("-","T",":").map { it.trim() }
-        tasks.year = format[0]
-        tasks.month = format[1]
-        tasks.day = format[2]
-        tasks.hour = format[3]
-        tasks.minute = format[4]
-        Log.d("Dobra:",format[0])
+        if (tasks.date != "") {
+            val format = tasks.date.split("-", "T", ":").map { it.trim() }
+            tasks.year = format[0]
+            tasks.month = format[1]
+            tasks.day = format[2]
+            tasks.hour = format[3]
+            tasks.minute = format[4]
+            Log.d("Dobra:", format[0])
+        }
+        else {tasks.date = "ARGH!" }
         return tasks
     }
 
@@ -49,8 +52,15 @@ class DoTAsk() {
                 "other" -> R.drawable.qmark
                 else -> R.drawable.circle
             }
-            val item = ItemCardView(drawable, tasks[i].title, "Data: ${tasks[i].day}-${tasks[i].month}-${tasks[i].year}   Time: ${tasks[i].hour}:${tasks[i].minute}", tasks[i].number)
-            list += item
+            if (tasks[i].date!="Urgent")
+            {
+                val item = ItemCardView(drawable, tasks[i].title, "Data: ${tasks[i].day}-${tasks[i].month}-${tasks[i].year}   Time: ${tasks[i].hour}:${tasks[i].minute}", tasks[i].number)
+                list += item
+            }
+            else{
+                val item = ItemCardView(drawable, tasks[i].title, "ARGH!", tasks[i].number)
+                list += item
+            }
 
         }
         return list
