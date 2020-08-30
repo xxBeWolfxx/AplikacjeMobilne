@@ -1,6 +1,11 @@
 package com.example.asystentoro
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class DoTAsk() {
@@ -41,6 +46,19 @@ class DoTAsk() {
         return tasks
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun LookingForTheEarliest()
+    {
+        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
+        val list = listOf("14-10-2016 | 15:48",
+            "01-08-2015 | 09:29",
+            "15-11-2016 | 19:43")
+        val result = list.sortedByDescending {
+            LocalDate.parse(it, dateTimeFormatter)
+        }
+    var kkkk = 0
+    }
 
     fun generateTaskList(tasks: ArrayList<DoTAsk>): ArrayList<ItemCardView> {
         val list = ArrayList<ItemCardView>()
