@@ -113,7 +113,9 @@ class nav_mydayFragment : Fragment() {
         time_task?.isEnabled = false
         text_task?.isEnabled = false
 
-        myDayTask= MyApplication.globalTask!!
+        myDayTask = DoTAsk().Sorting(MyApplication.globalTask!!)
+        MyApplication.globalTask = myDayTask
+
         var soon_task = DoTAsk().CurrentTask(myDayTask)
         title_task?.setText(myDayTask[soon_task!!].title)
         text_task?.setText(myDayTask[soon_task!!].text)

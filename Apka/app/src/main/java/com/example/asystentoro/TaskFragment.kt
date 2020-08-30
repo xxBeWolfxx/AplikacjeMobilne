@@ -171,6 +171,11 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                 myTaskFromMainActivity[clickposition].type = Spinner?.getSelectedItem().toString()
                 if (textInput?.text.toString() == "" ) myTaskFromMainActivity[clickposition].text = ""
                 else    myTaskFromMainActivity[clickposition].text = textInput?.text.toString()
+                if(dateTask?.text.toString() + timerTask?.text.toString() == "DD-MM-YYYY" + "00:00")
+                {
+                    Toast.makeText(context, "WARNING!! You have to set time and day", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
                 myTaskFromMainActivity[clickposition].date = dateTask?.text.toString() + "T" + timerTask?.text.toString()
                 myTaskFromMainActivity[clickposition] = DoTAsk().dataConverter(myTaskFromMainActivity[clickposition])
                 val clickedItem = exampleList[clickposition]
@@ -197,12 +202,15 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
 
         }
-            myTaskFromMainActivity = DoTAsk().Sorting(myTaskFromMainActivity)
-            MyApplication.globalTask = myTaskFromMainActivity
             adapter.notifyDataSetChanged()
             adding = false
             isclicked = false
             settingCard(false)
+            titleTask?.setText("")
+            textInput?.setText("")
+            Spinner?.setSelection(0)
+            dateTask?.text = "DD-MM-YYYY"
+            timerTask?.text = "00:00"
         }
 
 
@@ -230,10 +238,15 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             }}
             exampleList.removeAt(clickposition)
             myTaskFromMainActivity.removeAt(clickposition)
-            myTaskFromMainActivity = DoTAsk().Sorting(myTaskFromMainActivity)
             MyApplication.globalTask = myTaskFromMainActivity
             adapter.notifyDataSetChanged()
-            //apolloclientTask?.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput()))?.toDeferred()
+            settingCard(false)
+            titleTask?.setText("")
+            textInput?.setText("")
+            Spinner?.setSelection(0)
+            dateTask?.text = "DD-MM-YYYY"
+            timerTask?.text = "00:00"
+
         }
 
       /////////////////////     SPINER - TYPE        //////////////////
