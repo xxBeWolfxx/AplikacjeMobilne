@@ -197,6 +197,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
 
 
         }
+            myTaskFromMainActivity = DoTAsk().Sorting(myTaskFromMainActivity)
             MyApplication.globalTask = myTaskFromMainActivity
             adapter.notifyDataSetChanged()
             adding = false
@@ -229,6 +230,8 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
             }}
             exampleList.removeAt(clickposition)
             myTaskFromMainActivity.removeAt(clickposition)
+            myTaskFromMainActivity = DoTAsk().Sorting(myTaskFromMainActivity)
+            MyApplication.globalTask = myTaskFromMainActivity
             adapter.notifyDataSetChanged()
             //apolloclientTask?.mutate(SaveTasksMutation("Spotkanko na winko", myTaskFromMainActivity[3].id!!,"A to jest z Tasku XD".toInput()))?.toDeferred()
         }

@@ -24,7 +24,10 @@ import java.util.*
 import android.content.Context
 import android.location.Geocoder
 import android.location.LocationManager
+import android.os.Build
 import android.widget.*
+import androidx.annotation.RequiresApi
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -57,9 +60,16 @@ class nav_mydayFragment : Fragment() {
     var lat :Double?=null
     var lon:Double?=null
     var City:String?=null
+    var image: ImageView?=null
+    var title_task: TextView?=null
+    var type_task: TextView?=null
+    var date_task: TextView?=null
+    var time_task: TextView?=null
+    var text_task: TextView?=null
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1010
+    lateinit var myDayTask: ArrayList<DoTAsk>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +90,8 @@ class nav_mydayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_nav_myday, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         search = view.findViewById(R.id.search_edit)
         search_floating = view.findViewById(R.id.floating_search)
@@ -88,6 +100,37 @@ class nav_mydayFragment : Fragment() {
         view_temp = view.findViewById(R.id.temp)
         view_press = view.findViewById(R.id.press)
         view_hum = view.findViewById(R.id.hum)
+        image =view.findViewById(R.id.imageViewcardPresent)
+        title_task=view.findViewById(R.id.titleTask)
+        type_task=view.findViewById(R.id.typeTask)
+        date_task=view.findViewById(R.id.dateTask)
+        time_task=view.findViewById(R.id.timerTask)
+        text_task=view.findViewById(R.id.infoText)
+
+        title_task?.isEnabled = false
+        type_task?.isEnabled = false
+        date_task?.isEnabled = false
+        time_task?.isEnabled = false
+        text_task?.isEnabled = false
+
+        myDayTask= MyApplication.globalTask!!
+        var soon_task = DoTAsk().CurrentTask(myDayTask)
+        title_task?.setText(myDayTask[soon_task!!].title)
+        text_task?.setText(myDayTask[soon_task!!].text)
+        image?.setImageResource(when (myDayTask[soon_task!!].type?.toLowerCase()) {
+            "meeting" -> R.drawable.meeting
+            "shop list" -> R.drawable.shoplist
+            "to do" -> R.drawable.todo
+            "other" -> R.drawable.qmark
+            else -> R.drawable.circle
+        }
+        )
+        date_task?.text ="${myDayTask[soon_task!!].year}-${myDayTask[soon_task].month}-${myDayTask[soon_task].day}"
+        time_task?.text ="${myDayTask[soon_task].hour}:${myDayTask[soon_task].minute}"
+
+
+        type_task?.setText(myDayTask[soon_task].type)
+
 
         if(MyApplication.gcity==null){
 
