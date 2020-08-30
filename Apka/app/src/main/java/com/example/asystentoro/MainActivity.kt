@@ -2,9 +2,11 @@ package com.example.asystentoro
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var apolloClient: ApolloClient
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_task)
@@ -46,16 +49,11 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             respone = apolloClient.query(TaskDetailsQuery()).toDeferred().await()
             TaskManger = convertDatabse(respone)
+            TaskManger = DoTAsk().Sorting(TaskManger)
             MyApplication.globalTask = TaskManger
 
-        }
-        val facebook = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"))
-//        startActivity(facebook)
-        val instagram = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com"))
-//        startActivity(instagram)
-        val twitter = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"))
-//        startActivity(twitter)
 
+        }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -64,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro, R.id.nav_facebook, R.id.nav_instagram, R.id.nav_twitter
+                R.id.nav_home, R.id.nav_task, R.id.nav_myday, R.id.nav_pomodoro
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
