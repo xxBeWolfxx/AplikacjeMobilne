@@ -3,29 +3,28 @@ package com.example.asystentoro
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.media.Image
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import androidx.recyclerview.widget.GridLayoutManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.toInput
 import com.apollographql.apollo.coroutines.toDeferred
-import com.example.SaveTasksMutation
-import kotlinx.android.synthetic.main.fragment_task.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import androidx.lifecycle.lifecycleScope
 import com.example.CreateTaskMutation
 import com.example.DeleteTaskMutation
+import com.example.SaveTasksMutation
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,8 +72,6 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
     var button_time:Button? = null
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val let = arguments?.let {
@@ -95,6 +92,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         return inflater.inflate(R.layout.fragment_task, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ShowToast")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,6 +111,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
         RecyclerTasks = view.findViewById(R.id.RycyclerTask)
         exampleList = DoTAsk().generateTaskList(myTaskFromMainActivity)
         adapter = MyAdapter(exampleList, this)
+
 
         RecyclerTasks?.adapter = adapter
         RecyclerTasks?.layoutManager = LinearLayoutManager(view.context)
@@ -151,9 +150,15 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                     "other" -> R.drawable.qmark
                     else -> R.drawable.circle
             }
-                val addItem = ItemCardView(drawable, newItem.title,"Data: ${newItem.day}-${newItem.month}-${newItem.year}   Time: ${newItem.hour}:${newItem.minute}", newItem.number)
+                val addItem = ItemCardView(drawable, newItem.title,"Date: ${newItem.day}-${newItem.month}-${newItem.year}   Time: ${newItem.hour}:${newItem.minute}", newItem.number)
+
                 myTaskFromMainActivity.add(newItem)
                 exampleList.add(addItem.ID,addItem)
+               // ItemCardView(drawable)
+               // CardView.setVisibility(View.GONE);
+                //TextView.setTextColor(Color.parseColor("#FFD60000")) ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
                 lifecycleScope.launchWhenResumed{
                     val respone = try {apolloclientTask?.mutate(CreateTaskMutation(newItem.title,newItem.text.toInput(),newItem.date,newItem.type!!))?.toDeferred()?.await()}
@@ -330,7 +335,7 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                 selectedTime.set(Calendar.MINUTE,minute)
                 timerTask?.text = timeFormat.format(selectedTime.time)
             },
-                now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),false)
+                now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),true)
             timePicker.show()
 
         }

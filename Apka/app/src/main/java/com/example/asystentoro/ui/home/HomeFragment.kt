@@ -1,6 +1,8 @@
 package com.example.asystentoro.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.example.asystentoro.MyApplication
 import com.example.asystentoro.R
+import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +26,9 @@ class HomeFragment : Fragment() {
     var view_temp: TextView? = null
     var view_press: TextView? = null
     var view_hum: TextView? = null
+    var icon_fb: ImageView? = null
+    var icon_pp: ImageView? = null
+
 
 
     override fun onCreateView(
@@ -43,6 +50,17 @@ class HomeFragment : Fragment() {
         view_temp = view.findViewById(R.id.temp)
         view_press = view.findViewById(R.id.press)
         view_hum = view.findViewById(R.id.hum)
+        icon_fb= view.findViewById(R.id.imageFB)
+        icon_pp = view.findViewById(R.id.imagePP)
+
+        icon_fb?.setOnClickListener(){
+            openBrowser(imageFB)
+
+        }
+        icon_pp?.setOnClickListener(){
+            openBrowser(imagePP)
+
+        }
 
         if(MyApplication.city==null) {
         }else {
@@ -75,6 +93,19 @@ class HomeFragment : Fragment() {
 
 
     }
+    fun openBrowser(view: View) {
+
+        //Get url from tag
+        val url = view.tag as String
+        val intent = Intent()
+        intent.action = Intent.ACTION_VIEW
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+
+        //pass the url to intent data
+        intent.data = Uri.parse(url)
+        startActivity(intent)
+    }
+
 
     fun setText(text: TextView, value: String) {
         this.activity?.runOnUiThread(Runnable { text.text = value })

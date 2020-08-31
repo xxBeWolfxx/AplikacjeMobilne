@@ -21,14 +21,15 @@
             android:layout_width="0dp"
             android:layout_height="290dp"
             android:layout_marginTop="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cardviewTask"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="15dp"
@@ -41,6 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <LinearLayout
+                android:id="@+id/TaskViewLineral"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -223,7 +225,7 @@
         <View
 
             android:id="@+id/view2"
-            android:layout_width="408dp"
+            android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -232,8 +234,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="70dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="70dp"
             android:elevation="4dp"
             app:cardBackgroundColor="#C1FFFFFF"
             app:cardCornerRadius="10dp"
@@ -320,8 +324,8 @@
             android:id="@+id/button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
             android:backgroundTintMode="add"
             android:src="@android:drawable/ic_menu_mylocation"
             app:backgroundTint="#009688"
