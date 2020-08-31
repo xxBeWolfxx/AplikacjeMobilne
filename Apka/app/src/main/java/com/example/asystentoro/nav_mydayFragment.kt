@@ -1,32 +1,42 @@
 package com.example.asystentoro
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_nav_myday.*
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
-import android.content.Context
-import android.location.Geocoder
-import android.location.LocationManager
-import android.os.Build
-import android.widget.*
-import androidx.annotation.RequiresApi
 import kotlin.collections.ArrayList
 
 
@@ -69,7 +79,10 @@ class nav_mydayFragment : Fragment() {
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1010
-    lateinit var myDayTask: ArrayList<DoTAsk>
+    var myDayTask: ArrayList<DoTAsk>? = DoTAsk().Sorting(MyApplication.globalTask!!)
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,26 +126,47 @@ class nav_mydayFragment : Fragment() {
         time_task?.isEnabled = false
         text_task?.isEnabled = false
 
-        myDayTask = DoTAsk().Sorting(MyApplication.globalTask!!)
+
+        //////////// NEXT TASK //////////////
+
+        val soon_task = DoTAsk().CurrentTask(myDayTask!!)
+
         MyApplication.globalTask = myDayTask
 
-        var soon_task = DoTAsk().CurrentTask(myDayTask)
-        title_task?.setText(myDayTask[soon_task!!].title)
-        text_task?.setText(myDayTask[soon_task!!].text)
-        image?.setImageResource(when (myDayTask[soon_task!!].type?.toLowerCase()) {
-            "meeting" -> R.drawable.meeting
-            "shop list" -> R.drawable.shoplist
-            "to do" -> R.drawable.todo
-            "other" -> R.drawable.qmark
-            else -> R.drawable.circle
+
+        if(soon_task!=null) {
+            title_task?.setText(myDayTask!![soon_task].title)
+            text_task?.setText(myDayTask!![soon_task].text)
+            image?.setImageResource(
+                when (myDayTask!![soon_task].type?.toLowerCase()) {
+                    "meeting" -> R.drawable.meeting
+                    "shop list" -> R.drawable.shoplist
+                    "to do" -> R.drawable.todo
+                    "other" -> R.drawable.qmark
+                    else -> R.drawable.circle
+                }
+            )
+            date_task?.text =
+                "${myDayTask!![soon_task].year}-${myDayTask!![soon_task].month}-${myDayTask!![soon_task].day}"
+            time_task?.text = "${myDayTask!![soon_task].hour}:${myDayTask!![soon_task].minute}"
+            type_task?.setText(myDayTask!![soon_task].type)
+
+
+
+
+
+        }else {
+
+           cardView.setVisibility(View.GONE);
+            val ProgrammaticallyTextView = TextView(context)
+            ProgrammaticallyTextView.text = "YOU DON'T HAVE ANY NEXT TASKS!"
+            ProgrammaticallyTextView.setPadding(0,30,0,0)
+            ProgrammaticallyTextView.setGravity(Gravity.CENTER);
+         TaskViewLineral.addView(ProgrammaticallyTextView)
+
         }
-        )
-        date_task?.text ="${myDayTask[soon_task!!].year}-${myDayTask[soon_task].month}-${myDayTask[soon_task].day}"
-        time_task?.text ="${myDayTask[soon_task].hour}:${myDayTask[soon_task].minute}"
 
-
-        type_task?.setText(myDayTask[soon_task].type)
-
+        /////////////// WEATHER FROM TEXT VIEW OR LOCATION //////////////////////
 
         if(MyApplication.gcity==null){
 
@@ -146,6 +180,10 @@ class nav_mydayFragment : Fragment() {
         }else {
             api_key("https://api.openweathermap.org/data/2.5/weather?lat=${MyApplication.glat}&lon=${MyApplication.glon}&appid=a6f41d947e0542a26580bcd5c3fb90ef&units=metric")
         }
+
+
+        ///////////// WEATHER FROM TEXT VIEW ////////////
+
 
         search_floating?.setOnClickListener {
             val imm = getSystemService(requireView().context, InputMethodManager::class.java)
@@ -175,6 +213,8 @@ class nav_mydayFragment : Fragment() {
 
 
     }
+
+    ////////////// GET THE WEATHER DATA FROM OPENWEATHER [PAGE] //////////////
 
      fun api_key(Key: String) {
         val client = OkHttpClient()
@@ -276,6 +316,16 @@ class nav_mydayFragment : Fragment() {
             }
         })
     }
+
+
+
+
+
+
+
+    ///////////////////////// LOCATION /////////////////////////////
+
+
     @SuppressLint("MissingPermission", "SetTextI18n")
     fun getLastLocation(){
 
@@ -372,13 +422,10 @@ class nav_mydayFragment : Fragment() {
 
     private fun getCityName(lat: Double,long: Double):String{
         var cityName:String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(context, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat,long,3)
+        val geoCoder = Geocoder(context, Locale.getDefault())
+        val Adress = geoCoder.getFromLocation(lat,long,3)
 
         cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
-        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
         return cityName
     }
 
