@@ -14,7 +14,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+
         android:background="@android:color/background_light"
         android:minWidth="1080dp"
         android:minHeight="1920dp">
@@ -24,9 +24,9 @@
             android:id="@+id/PomodoroStatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="36dp"
             android:layout_marginBottom="16dp"
-            android:text="Current Activity"
+            android:text="Current Activity "
             android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/PomodoroProgress"
@@ -40,11 +40,12 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginEnd="8dp"
-            android:progress="80"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="80"
+            />
 
         <TextView
             android:id="@+id/PomodoroCounter"
@@ -58,18 +59,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/PomodoroCyclesLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/PomodoroCounter"
+            app:layout_constraintEnd_toEndOf="@+id/PomodoroProgress"
+            app:layout_constraintStart_toStartOf="@+id/PomodoroProgress"
+            app:layout_constraintTop_toTopOf="@+id/PomodoroProgress" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:baselineAligned="false"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintBottom_toTopOf="@+id/editText_pomodoro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/PomodoroProgress"
-
             >
 
             <LinearLayout
@@ -81,7 +91,7 @@
                 android:visibility="visible">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/PomodoroStartButton"
+                    android:id="@+id/PomodoroStartPauseButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
@@ -92,26 +102,26 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/PomodoroPauseButtonWrapper"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:visibility="gone"
-                tools:visibility="visible">
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/PomodoroPauseButtonWrapper"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="0"-->
+            <!--                android:gravity="center_horizontal"-->
+            <!--                android:visibility="gone"-->
+            <!--                tools:visibility="visible">-->
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/PomodoroPauseButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_pause"
-                    tools:ignore="NestedWeights" />
+            <!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+            <!--                    android:id="@+id/PomodoroPauseButton"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginBottom="16dp"-->
+            <!--                    android:clickable="true"-->
+            <!--                    android:focusable="true"-->
+            <!--                    android:src="@drawable/ic_pause"-->
+            <!--                    tools:ignore="NestedWeights" />-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/PomodoroStopButtonWrapper"
@@ -133,27 +143,92 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/PomodoroSettingsButtonWrapper"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:visibility="visible">
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/PomodoroSettingsButtonWrapper"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:gravity="center_horizontal"-->
+            <!--                android:visibility="visible">-->
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/PomodoroSettingsButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_settings"
-                    tools:ignore="NestedWeights" />
+            <!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+            <!--                    android:id="@+id/PomodoroSettingsButton"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginBottom="16dp"-->
+            <!--                    android:clickable="true"-->
+            <!--                    android:focusable="true"-->
+            <!--                    android:src="@drawable/ic_settings"-->
+            <!--                    tools:ignore="NestedWeights" />-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView_pomodoro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pomodoro: "
+            app:layout_constraintBaseline_toBaselineOf="@+id/editText_pomodoro"
+            app:layout_constraintEnd_toStartOf="@+id/editText_pomodoro"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_pomodoro"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:hint="Minutes"
+            android:inputType="number"
+            android:maxLength="3"
+            android:selectAllOnFocus="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PomodoroProgress"
+            />
+
+        <EditText
+            android:id="@+id/editText_break"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="Minutes"
+            android:inputType="number"
+            android:maxLength="3"
+            android:selectAllOnFocus="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_pomodoro" />
+
+        <TextView
+            android:id="@+id/textView_break"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Break: "
+            app:layout_constraintBaseline_toBaselineOf="@+id/editText_break"
+            app:layout_constraintEnd_toStartOf="@+id/editText_break"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/PomodoroSetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_break"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editText_pomodoro"
+            app:layout_constraintTop_toTopOf="@+id/editText_pomodoro" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
