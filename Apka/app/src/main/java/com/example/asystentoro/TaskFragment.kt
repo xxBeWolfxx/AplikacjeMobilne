@@ -237,6 +237,11 @@ class TaskFragment : Fragment(), MyAdapter.OnItemClickListener {
                 Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            if (titleTask?.text.toString() == "")
+            {
+                Toast.makeText(context, "WARNING!! I CANT DO THAT", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             lifecycleScope.launchWhenResumed{ val respone = try {apolloclientTask?.mutate(DeleteTaskMutation(myTaskFromMainActivity[clickposition].id!!))?.toDeferred()?.await()}
             catch (e:Exception){
                 null

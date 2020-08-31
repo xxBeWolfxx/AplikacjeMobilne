@@ -3,6 +3,7 @@ package com.example.asystentoro.ui.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import com.example.asystentoro.DoTAsk
 import com.example.asystentoro.MyApplication
 import com.example.asystentoro.R
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -28,6 +31,8 @@ class HomeFragment : Fragment() {
     var view_hum: TextView? = null
     var icon_fb: ImageView? = null
     var icon_pp: ImageView? = null
+    var icon_task: ImageView? = null
+    var myDayTask: ArrayList<DoTAsk>? = MyApplication.globalTask?.let { DoTAsk().Sorting(it) }
 
 
 
@@ -43,6 +48,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         view_weather = view.findViewById(R.id.wheather_image)
@@ -52,6 +58,25 @@ class HomeFragment : Fragment() {
         view_hum = view.findViewById(R.id.hum)
         icon_fb= view.findViewById(R.id.imageFB)
         icon_pp = view.findViewById(R.id.imagePP)
+        icon_task = view.findViewById(R.id.imageTask)
+
+        val soon_task = myDayTask?.let { DoTAsk().CurrentTask(it) }
+        MyApplication.globalTask = myDayTask
+
+        if(soon_task!=null) {
+
+            icon_task?.setImageResource(
+                when (myDayTask!![soon_task].type?.toLowerCase()) {
+                    "meeting" -> R.drawable.meeting
+                    "shop list" -> R.drawable.shoplist
+                    "to do" -> R.drawable.todo
+                    "other" -> R.drawable.qmark
+                    else -> R.drawable.circle
+                }
+            )
+        }
+
+
 
         icon_fb?.setOnClickListener(){
             openBrowser(imageFB)
@@ -87,10 +112,6 @@ class HomeFragment : Fragment() {
 
         val btnTasks: Button = view.findViewById(R.id.btnTasks)
         btnTasks.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_task))
-
-        val btnPomodoro: Button = view.findViewById(R.id.btnPomodoro)
-        btnPomodoro.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_pomodoro))
-
 
     }
     fun openBrowser(view: View) {

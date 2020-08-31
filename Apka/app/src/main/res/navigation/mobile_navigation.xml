@@ -18,13 +18,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_nav_home_to_nav_pomodoro"
-            app:destination="@id/nav_pomodoro"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_nav_home_to_nav_task"
             app:destination="@id/nav_task"
             app:enterAnim="@anim/nav_default_pop_enter_anim"
@@ -44,9 +37,4 @@
         android:name="com.example.asystentoro.TaskFragment"
         android:label="Tasks"
         tools:layout="@layout/fragment_task" />
-    <fragment
-        android:id="@+id/nav_pomodoro"
-        android:name="com.example.asystentoro.PomodoroFragment"
-        android:label="Pomodoro"
-        tools:layout="@layout/fragment_pomodoro" />
 </navigation>

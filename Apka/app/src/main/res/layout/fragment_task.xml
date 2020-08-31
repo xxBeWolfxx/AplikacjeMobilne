@@ -9,9 +9,7 @@
     android:backgroundTintMode="screen"
     android:minWidth="1080dp"
     android:minHeight="1920dp"
-    android:orientation="vertical"
     tools:context=".TaskFragment">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -243,8 +241,6 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </LinearLayout>
 
 
