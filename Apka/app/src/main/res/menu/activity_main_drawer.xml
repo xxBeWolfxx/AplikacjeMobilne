@@ -8,11 +8,12 @@
             android:id="@+id/nav_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_task"
-            android:title="@string/task" />
-        <item
             android:id="@+id/nav_myday"
             android:title="@string/myday" />
+        <item
+            android:id="@+id/nav_task"
+            android:title="@string/task" />
+
     </group>
 
 </menu>

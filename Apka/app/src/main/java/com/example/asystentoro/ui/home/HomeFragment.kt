@@ -31,8 +31,7 @@ class HomeFragment : Fragment() {
     var view_hum: TextView? = null
     var icon_fb: ImageView? = null
     var icon_pp: ImageView? = null
-    var icon_task: ImageView? = null
-    var myDayTask: ArrayList<DoTAsk>? = MyApplication.globalTask?.let { DoTAsk().Sorting(it) }
+
 
 
 
@@ -58,25 +57,6 @@ class HomeFragment : Fragment() {
         view_hum = view.findViewById(R.id.hum)
         icon_fb= view.findViewById(R.id.imageFB)
         icon_pp = view.findViewById(R.id.imagePP)
-        icon_task = view.findViewById(R.id.imageTask)
-
-        val soon_task = myDayTask?.let { DoTAsk().CurrentTask(it) }
-        MyApplication.globalTask = myDayTask
-
-        if(soon_task!=null) {
-
-            icon_task?.setImageResource(
-                when (myDayTask!![soon_task].type?.toLowerCase()) {
-                    "meeting" -> R.drawable.meeting
-                    "shop list" -> R.drawable.shoplist
-                    "to do" -> R.drawable.todo
-                    "other" -> R.drawable.qmark
-                    else -> R.drawable.circle
-                }
-            )
-        }
-
-
 
         icon_fb?.setOnClickListener(){
             openBrowser(imageFB)
@@ -86,6 +66,12 @@ class HomeFragment : Fragment() {
             openBrowser(imagePP)
 
         }
+
+        val btnDay: Button = view.findViewById(R.id.btnDay)
+        btnDay.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_myday))
+
+        val btnTasks: Button = view.findViewById(R.id.btnTasks)
+        btnTasks.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_task))
 
         if(MyApplication.city==null) {
         }else {
@@ -107,11 +93,6 @@ class HomeFragment : Fragment() {
             view_weather?.let { MyApplication.weather?.let { it1 -> setImage(it, it1) } }
 
         }
-        val btnDay: Button = view.findViewById(R.id.btnDay)
-        btnDay.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_myday))
-
-        val btnTasks: Button = view.findViewById(R.id.btnTasks)
-        btnTasks.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_task))
 
     }
     fun openBrowser(view: View) {
