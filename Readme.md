@@ -1,28 +1,45 @@
-# Projekt Aplikacje Mobilne 
-# Encodoro 
-- [Encodoro <-> Aplikcjana Telefon](assets/encodoro.md)
-
-# Asystentoro 
-Projekt ma na celu stworzenie aplikacji kompatybilnej z projektem Ł.Kozaka (Encodoro Pomodoro) rozszerzonej o nowe funkcje komunikacji z użytkownikiem.
+# Projekt Aplikacje Mobilne: Asystentoro 
+Projekt został stworzony w Android Studio w języku Kotlin 1.3.72 . Apka ma na celu wspomóc studentów Politechniki Poznańskiej w organizacji i zarządzaniu czasem.
 
 ## Założenia aplikacji: 
-1. Ekran logowania: konto lokalne albo fejs albo Google (OAuth).
-1. Funkcje aplikacji:
-    - pomodoro (konfiguracja czasomierza);
-    - mój dzień: pogoda, zadania jakie na dzisiaj (jakieś deadline'y i te sprawy):
+### Funkcje aplikacji:
+    - mój dzień: pogoda, najbliższe zadania 
         - Pogoda, data
-        - Lista zadań na dziś 
-        - Lista roziwjana do wyboru grupy zadań (np. zakupy)
-        - Pół ekranu wtedy zajmie wywołana lista
-    - zadania (dodawania nowych zadań i oglądanie starych):
-        - Można dodawać/usuwać grupy a po wejściu w grupę również zadania 
-        - Baza danych online - po to konto google-a 
+        - Wizytówka z najbliższym zadaniem z jego opisem
+    - moje zadania:
+        - Zarządzanie starymi i nowymi zdaniami
+        - Baza danych online oparta na darmowej usłudze GraphCMS (graphql)
 
-1. Powiadomienia jak SMSki działają w tle.
-1. Lokalna baza danych.
+## Działanie aplikacji:
+#### Moje zadania
+Aplikacja ściśle współpracuje z bazą danych. W aplikacji użyliśmy Apollo framework do komunikacji z nią. Każda ingerencja jest wsyłana do bazy danych i zapisywana. Sama baza danych została zaimplementowana w najprostszy sposób, aby ukazać zasadnicze jej działanie. 
 
-Wszystkie te funckje ściśle działają z Encodoro i jego wyswietlaczem.
+#### Mój dzień
+Ten fragment został stworzony jako prezentacja dnia. Ściśle współpracuje z funkcją Moje zadania. Wyświetla najbliższe zadania oraz pogodę. Pogodę można otrzymać na dwa sposoby:
+		- za pomocą wpisania miejscowości
+		- za pomocą GPSa
+Sama pogoda pobiera dane z [openweathermap.org](http://openweathermap.org "openweathermap.org") 
+
+## Prezentacja zdjęć:
+
+Home: ![Home](gitzdjecia/Home.jpg)
+
+>Prezentujemy na ekranie głównym informacje o pogodzie, znajduje się tutaj szybki dostęp do Mojego dnia i Zadań. Na dole ekranu znajdują się ważne przyciski dla studenta z polibudy.
+
+My Day ![My Day](gitzdjecia/MyDay.jpg)
+
+>Ustawienia pogody oraz wyświetlanie najbliższego zadania
+
+Tasks ![Tasks](gitzdjecia/Tasks.jpg)
+
+>Zarządzanie listą zadań oraz jej podgląd. (Plusem dodaje się nowe zadanie)
 
 
-Szkic
-[Zdjęcie](PRALKA.png) 
+
+Chcieliśmy dopracować aplikację i zabezpieczyć przed krytycznymi błędami, ale niestety nie było nas stać na beta testerów :) **Przepraszam za niedogodności!!!**
+
+
+
+
+
+
